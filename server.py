@@ -27,6 +27,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Expires", "0")
         super().end_headers()
 
+    def do_GET(self):
+        if self.path in ("/", ""):
+            self.path = "/okuma-yazma-asistani.html"
+        return super().do_GET()
+
     def do_POST(self):
         if self.path != "/log":
             self.send_response(404)

@@ -9,3 +9,6 @@ logs/
 # Vercel / Node
 .vercel/
 node_modules/
+
+# Yerel araç ayarları
+.claude/

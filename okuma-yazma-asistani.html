@@ -2,11 +2,19 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"/>
+<meta name="theme-color" content="#534AB7"/>
+<meta name="color-scheme" content="light"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Asistanım"/>
 <title>Okuma Yazma Asistanım</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,textarea,input,a{-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation}
 :root{
   --p50:#EEEDFE;--p100:#CECBF6;--p400:#7F77DD;--p600:#534AB7;--p800:#3C3489;
   --t50:#E1F5EE;--t400:#1D9E75;--t800:#085041;
@@ -16,11 +24,11 @@
   --fn:'Nunito',system-ui,sans-serif;
   --sw:260px;
 }
-html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g900);overflow:hidden}
+html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g900);overflow:hidden;overscroll-behavior:none}
 /* Layout */
-.app{display:flex;height:100vh}
-.sidebar{width:var(--sw);min-width:var(--sw);height:100vh;background:#fff;border-right:1px solid var(--g100);display:flex;flex-direction:column;transition:transform .28s ease;z-index:100}
-.main{flex:1;display:flex;flex-direction:column;min-width:0;height:100vh}
+.app{display:flex;height:100vh;height:100dvh}
+.sidebar{width:var(--sw);min-width:var(--sw);height:100vh;height:100dvh;background:#fff;border-right:1px solid var(--g100);display:flex;flex-direction:column;transition:transform .28s ease;z-index:100}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;height:100vh;height:100dvh}
 /* Sidebar */
 .sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:18px 16px 14px;border-bottom:1px solid var(--g100)}
 .logo{display:flex;align-items:center;gap:8px}
@@ -81,9 +89,9 @@ html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g9
 .input-area{padding:10px 16px 8px;background:#fff;border-top:1px solid var(--g100);flex-shrink:0}
 .input-wrap{display:flex;gap:8px;align-items:flex-end;background:var(--g50);border:1.5px solid var(--g100);border-radius:var(--rlg);padding:7px 7px 7px 14px;transition:border-color .15s}
 .input-wrap:focus-within{border-color:var(--p400);background:#fff}
-.input-wrap textarea{flex:1;border:none;background:none;font-family:var(--fn);font-size:14.5px;font-weight:600;color:var(--g900);resize:none;outline:none;line-height:1.5;min-height:22px;max-height:110px}
+.input-wrap textarea{flex:1;border:none;background:none;font-family:var(--fn);font-size:16px;font-weight:600;color:var(--g900);resize:none;outline:none;line-height:1.5;min-height:24px;max-height:110px}
 .input-wrap textarea::placeholder{color:var(--g400);font-weight:400}
-.send-btn{width:36px;height:36px;border-radius:50%;background:var(--p600);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .12s,transform .1s;color:#fff}
+.send-btn{width:44px;height:44px;border-radius:50%;background:var(--p600);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .12s,transform .1s;color:#fff}
 .send-btn:hover{background:var(--p800)}
 .send-btn:active{transform:scale(.9)}
 .send-btn:disabled{opacity:.4;cursor:default}
@@ -93,7 +101,7 @@ html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g9
 .key-setup h2{font-size:15px;font-weight:700;color:var(--p800);margin-bottom:6px}
 .key-setup p{font-size:12.5px;color:var(--g600);margin-bottom:12px;line-height:1.6}
 .key-row{display:flex;gap:7px}
-.key-input{flex:1;padding:9px 11px;border:1.5px solid var(--g100);border-radius:var(--rsm);font-family:var(--fn);font-size:13px;color:var(--g900);outline:none}
+.key-input{flex:1;padding:11px 12px;border:1.5px solid var(--g100);border-radius:var(--rsm);font-family:var(--fn);font-size:16px;color:var(--g900);outline:none}
 .key-input:focus{border-color:var(--p400)}
 .key-btn{padding:9px 14px;background:var(--p600);color:#fff;border:none;border-radius:var(--rsm);font-family:var(--fn);font-size:13px;font-weight:700;cursor:pointer}
 .key-btn:hover{background:var(--p800)}
@@ -161,6 +169,83 @@ html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g9
   .game-select{grid-template-columns:1fr 1fr}
   .options-grid{grid-template-columns:1fr 1fr}
 }
+
+/* ===== MOBİL & DOKUNMATİK İYİLEŞTİRMELER ===== */
+/* Çentik / güvenli alan (iPhone notch & alt çubuk) */
+.topbar{height:auto;min-height:54px;padding-top:max(0px,env(safe-area-inset-top))}
+.sidebar-header{padding-top:calc(18px + env(safe-area-inset-top))}
+.input-area{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+.sidebar{padding-bottom:env(safe-area-inset-bottom)}
+/* Akıcı kaydırma + taşma kontrolü */
+.panel{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+/* Uzun kelime/cevaplar taşmasın */
+.bubble{overflow-wrap:anywhere;word-break:break-word}
+.game-word,.hece-word,.blank-word,.game-question{overflow-wrap:anywhere;max-width:100%}
+/* Dokunmatik geri bildirim (basınca küçülme) */
+.nav-btn:active,.qcard:active,.opt-btn:active,.gsel-btn:active,.next-btn:active,.hece-chip:active,.letter-tile:active,.key-btn:active{transform:scale(.96)}
+/* Dokunmatik cihazda hover yapışmasını önle */
+@media (hover:none){
+  .qcard:hover,.gsel-btn:hover,.opt-btn:hover{transform:none}
+}
+/* Klavyeyle gezinince net odak çerçevesi (erişilebilirlik) */
+:focus-visible{outline:3px solid var(--p400);outline-offset:2px}
+button:focus:not(:focus-visible){outline:none}
+
+/* Telefon: büyük dokunma hedefleri + okunabilir yazı */
+@media (max-width:680px){
+  .topbar{min-height:58px;gap:8px}
+  .menu-btn{padding:10px;margin-left:-4px}
+  .menu-btn span{width:22px}
+  .topbar-title{font-size:16px}
+  .clear-btn{font-size:20px;padding:9px}
+  .nav-btn{padding:13px 12px;font-size:15px}
+  .nav-icon{font-size:18px}
+  .chat-area{padding:16px 14px}
+  .welcome{padding:20px 14px 10px}
+  .welcome-avatar{font-size:54px}
+  .welcome-title{font-size:22px}
+  .welcome-sub{font-size:14px}
+  .qcard{padding:16px 10px;font-size:14px;min-height:76px;display:flex;flex-direction:column;justify-content:center}
+  .qcard small{font-size:12px}
+  .bubble{font-size:15.5px;max-width:84%}
+  .avatar{width:34px;height:34px;font-size:17px}
+  .input-area{padding:10px 12px}
+  .input-wrap{padding:8px 8px 8px 14px}
+  .input-hint{font-size:11px}
+  /* Oyunlar */
+  .game-panel{padding:14px 12px}
+  .game-card{padding:16px 14px}
+  .game-word{font-size:34px}
+  .opt-btn{padding:16px 10px;font-size:16px;min-height:58px}
+  .gsel-btn{padding:20px 12px;min-height:122px;display:flex;flex-direction:column;justify-content:center}
+  .gsel-icon{font-size:38px}
+  .gsel-name{font-size:15.5px}
+  .gsel-desc{font-size:12.5px}
+  .next-btn{padding:15px 28px;font-size:16px;min-height:52px;width:100%}
+  .letter-tile{width:54px;height:54px;font-size:22px}
+  .hece-chip{padding:12px 20px;font-size:18px}
+  .blank-input{width:72px;font-size:24px}
+  .score-num{font-size:24px}
+  .feedback{font-size:16px}
+}
+/* Çok dar ekran (≤360px) */
+@media (max-width:360px){
+  .quick-grid{gap:7px}
+  .game-word{font-size:30px}
+  .opt-btn{font-size:15px;padding:14px 8px;min-height:54px}
+  .score-bar{gap:14px}
+}
+/* Yatay (landscape) telefon — dikey alanı koru */
+@media (max-height:480px) and (orientation:landscape){
+  .welcome{padding:10px}
+  .welcome-avatar{font-size:32px}
+  .welcome-title{font-size:17px}
+  .welcome-sub{font-size:12px}
+}
+/* Hareket azaltma tercihi (erişilebilirlik) */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
 </style>
 </head>
 <body>
@@ -169,7 +254,7 @@ html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g9
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="logo"><span class="logo-icon">📚</span><span class="logo-text">Asistanım</span></div>
-    <button class="sidebar-close" id="sidebarClose">✕</button>
+    <button class="sidebar-close" id="sidebarClose" aria-label="Menüyü kapat">✕</button>
   </div>
   <nav class="sidebar-nav">
     <p class="nav-label">Sohbet</p>
@@ -189,9 +274,9 @@ html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g9
 
 <main class="main">
   <header class="topbar">
-    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Menüyü aç"><span></span><span></span><span></span></button>
     <div class="topbar-title" id="topbarTitle">💬 Serbest Soru</div>
-    <button class="clear-btn" id="clearBtn">🗑️</button>
+    <button class="clear-btn" id="clearBtn" aria-label="Sohbeti temizle" title="Temizle">🗑️</button>
   </header>
 
   <div class="content">
@@ -208,9 +293,9 @@ html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g9
 
   <footer class="input-area" id="inputArea">
     <div class="input-wrap">
-      <textarea id="userInput" placeholder="Buraya yaz ve sor... 😊" rows="1"></textarea>
-      <button class="send-btn" id="sendBtn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <textarea id="userInput" placeholder="Buraya yaz ve sor... 😊" rows="1" aria-label="Sorunu yaz" enterkeyhint="send" autocomplete="off" autocapitalize="sentences" autocorrect="off"></textarea>
+      <button class="send-btn" id="sendBtn" aria-label="Gönder">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
     <p class="input-hint">Enter ile gönder · Shift+Enter yeni satır</p>
@@ -225,6 +310,7 @@ html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g9
 <script>
 // ===== CONFIG =====
 const SYSTEM_PROMPT = `Sen 1. ve 2. sınıf ilkokul öğrencilerine yönelik Türkçe okuma-yazma asistanısın.
+KAPSAM (ÇOK ÖNEMLİ): Yalnızca Türkçe okuma-yazma konularında yardım edersin: harfler, sesler, alfabe, heceleme, kelimeler, cümleler, imla/yazım, noktalama, okuma ve yazma. Bu konuların DIŞINDAKİ hiçbir soruyu (spor, maç, oyun, bilim, coğrafya, genel kültür, güncel olaylar vb.) cevaplama, bilgi verme veya tahmin yürütme. Konu dışı bir soru gelirse SADECE şunu söyle: "Ben okuma-yazma asistanıyım 😊 Sana harfler, heceler, kelimeler ve yazım konularında yardımcı olabilirim!"
 Yanıtların TDK (Türk Dil Kurumu) kurallarına TAM uymalı; asla sapma. Emin olmadığın kelimeyi kullanma, basit ve doğru bir örnek seç.
 ÜSLUP: Çok kısa, sade, sevecen. En fazla 3-4 cümle. Bol örnek, az teori. Çocuğu cesaretlendir. Karmaşık terim ve olumsuz dil yok.
 
@@ -420,6 +506,14 @@ function faqLookup(t){
 // "WORD kaç harf / ilk-son harf / kaç sesli-sessiz" gibi kelime sorularında hedef kelime
 const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','bu','şu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane']);
 
+// Okuma-yazma konu anahtarları — bir mesajda bunlardan hiçbiri geçmiyorsa soru KONU DIŞI sayılır
+const TOPIC_WORDS=['harf','ses','ünlü','ünsüz','alfabe','hece','kelime','sözcük','cümle','imla','yazım','yaz','oku','dikte','nokta','virgül','noktalama','ünlem','vurgu','satır','şiir','tekerleme','metin','paragraf','türkçe'];
+// Soru okuma-yazmayla ilgili mi? (yerel hızlı kapı)
+function onTopic(text){
+  const t=trLower(text||'');
+  return TOPIC_WORDS.some(w=>t.includes(w));
+}
+
 // Kullanıcı mesajına TDK-kesin cevap döndürür; yoksa null (o zaman modele sorulur)
 function localAnswer(text){
   const t=trLower(text);
@@ -578,6 +672,13 @@ async function chat(userText){
     messages.push({role:'assistant',content:local});
     return;
   }
+  // 1.5) Konu dışı soru → okuma-yazma dışındaki hiçbir soruya cevap verme (yerel hızlı kapı, API'ye gitmez)
+  if(!onTopic(userText)){
+    const redirect='Ben okuma-yazma asistanıyım 😊 Sana harfler, heceler, kelimeler, cümleler ve yazım konularında yardımcı olabilirim. Bunlardan birini sormak ister misin?';
+    appendBubble(redirect,'ai');
+    messages.push({role:'assistant',content:redirect});
+    return;
+  }
   // 2) Serbest soru → model gerekir
   isLoading=true;sendBtn.disabled=true;
   const loadEl=appendLoading();
@@ -607,7 +708,7 @@ async function chat(userText){
     logQA(userText,reply); // denetim için kaydet (yalnızca model cevapları)
   }catch(err){
     loadEl.remove();
-    appendBubble('Bir sorun çıktı 😊\n\n🔧 Gerçek hata: '+(err&&err.message?err.message:String(err)),'ai');
+    appendBubble('Şu an cevap veremedim, birazdan tekrar dener misin? 😊','ai');
     console.error(err);
   }
   isLoading=false;sendBtn.disabled=false;userInput.focus();
