@@ -556,7 +556,7 @@ function faqLookup(t){
 
 // "WORD kaç harf / ilk-son harf / kaç sesli-sessiz" gibi kelime sorularında hedef kelime
 // NOT: 'şu' BİLEREK yok — foldlanınca 'su' olur ve gerçek "su" kelimesini engellerdi.
-const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','kelimenin','bu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane','alfabe','alfabede','alfabenin','türkçe','türkçede','türkçenin','cümle','cümlede','sözcük']);
+const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','kelimenin','bu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane','alfabe','alfabede','alfabenin','türkçe','türkçede','türkçenin','cümle','cümlede','sözcük','nin','nın','nun','nün']);
 const WSTOPf=new Set([...WSTOP].map(fold)); // foldlanmış hâli (aksan-duyarsız kontrol için)
 
 // Okuma-yazma konu anahtarları — bir mesajda bunlardan hiçbiri geçmiyorsa soru KONU DIŞI sayılır
@@ -571,7 +571,7 @@ function onTopic(text){
 // Niyet eşleştirmesi foldlu metin (tf) üzerinde yapılır → "kac harf", "buyuk", "unlu" gibi
 // Türkçe karakter içermeyen çocuk yazımları da yakalanır. Kelime orijinal hâliyle (t) gösterilir.
 function localAnswer(text){
-  const t=trLower(text).replace(/['’ʼ]/g,''); // kesme işaretini kaldır: "araba'nın" → "arabanın"
+  const t=trLower(text).replace(/['’ʼ]/g,''); // kesme işareti harf değil: "araba'nın"→"arabanın", "Ali'nin"→"alinin" (6 harf)
   const tf=fold(t);
 
   // Tek harf: "X (harfi) sesli/sessiz mi" veya "X harfi nedir" → harfi sınıflandır.
@@ -592,11 +592,11 @@ function localAnswer(text){
     return `**${w}** kelimesinin ilk harfi **${trUpper(w[0])}** harfidir. 😊`;
   if((w=wq(/([a-z]{2,})\s+(?:kelimesin(?:in|de)\s+)?son harf/d)))
     return `**${w}** kelimesinin son harfi **${trUpper(w.slice(-1))}** harfidir. 😊`;
-  if((w=wq(/([a-z]{2,})\s+(?:kelimesinde\s+)?kac\s*sessiz/d))){
+  if((w=wq(/([a-z]{2,})\s+(?:kelimesinde\s+)?kac\s*(?:sessiz|unsuz)/d))){
     const n=[...w].filter(c=>SESSIZ.includes(c)).length;
     return `**${w}** kelimesinde **${n}** sessiz harf vardır. 😊`;
   }
-  if((w=wq(/([a-z]{2,})\s+(?:kelimesinde\s+)?kac\s*sesli/d))){
+  if((w=wq(/([a-z]{2,})\s+(?:kelimesinde\s+)?kac\s*(?:sesli|unlu)/d))){
     const n=[...w].filter(c=>SESLI.includes(c)).length;
     return `**${w}** kelimesinde **${n}** sesli harf vardır. 😊`;
   }
@@ -631,8 +631,8 @@ function localAnswer(text){
     return 'Hece bölme kuralı: Her hecede **bir sesli harf** vardır. İki sesli arasındaki tek sessiz sonraki heceye gider (a-ra-ba); iki sessiz yan yana ise bölünür (el-ma, kar-tal). Örnek: top (1), el-ma (2), ke-le-bek (3). 😊';
   }
 
-  // Alfabe / kaç harf (yalnızca SAYIM; "alfabe" tek başına değil → "alfabenin 5. harfi" modele gitsin)
-  if(/kac harf|harf var|harf sayisi/.test(tf))
+  // Alfabe harf sayısı — yalnızca "alfabe ... kaç harf"; çıplak "kaç harf" modele gitsin ("123456 kaç harf", "kaç harf var")
+  if(/alfabe/.test(tf)&&/kac harf|kac tane|harf say/.test(tf))
     return `Türk alfabesinde **29** harf vardır: **8** sesli (${SESLI.join(', ')}) ve **21** sessiz harf. 😊`;
 
   // Büyük harf

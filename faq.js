@@ -1,6 +1,6 @@
 // OTOMATIK URETILDI — gen_faq.py. Elle duzenleme yerine betigi calistir.
 // Soru bankasi: hazir, TDK-dogru cevaplar. Once buna bakilir; yoksa Gemini'ye sorulur.
-// Toplam kayit: 1656
+// Toplam kayit: 1672
 window.OW_FAQ = [
 {"q": "arı hecele", "a": "**arı** → a - rı (2 hece) 😊", "w": "arı", "k": ["hecele"]},
 {"q": "arı kaç hecelidir?", "a": "**arı** kelimesi **2** hecelidir: a-rı 😊", "w": "arı", "kany": ["kaç hece", "heceli", "hecesi", "hece sayı"]},
@@ -1632,11 +1632,25 @@ window.OW_FAQ = [
 {"q": "traş mı tıraş mu?", "a": "Doğrusu **tıraş**. ✍️ (\"traş\" yanlıştır.)", "w": "traş"},
 {"q": "sürpriz nasıl yazılır?", "a": "Doğrusu **sürpriz**. ✍️ (\"süpriz\" yanlıştır.)", "w": "sürpriz", "kany": ["yaz", "ayrı", "bitişik", "imla"]},
 {"q": "süpriz mı sürpriz mu?", "a": "Doğrusu **sürpriz**. ✍️ (\"süpriz\" yanlıştır.)", "w": "süpriz"},
+{"q": "orijinal nasıl yazılır?", "a": "Doğrusu **orijinal**. ✍️ (\"orjinal\" yanlıştır.)", "w": "orijinal", "kany": ["yaz", "ayrı", "bitişik", "imla"]},
+{"q": "orjinal mı orijinal mu?", "a": "Doğrusu **orijinal**. ✍️ (\"orjinal\" yanlıştır.)", "w": "orjinal"},
+{"q": "ya da nasıl yazılır?", "a": "Doğrusu **ya da**. ✍️ (\"yada\" yanlıştır.)", "w": "ya da", "kany": ["yaz", "ayrı", "bitişik", "imla"]},
+{"q": "yada mı ya da mu?", "a": "Doğrusu **ya da**. ✍️ (\"yada\" yanlıştır.)", "w": "yada"},
+{"q": "bugün nasıl yazılır?", "a": "Doğrusu **bugün**. ✍️ (\"bu gün\" yanlıştır.)", "w": "bugün", "kany": ["yaz", "ayrı", "bitişik", "imla"]},
+{"q": "bu gün mı bugün mu?", "a": "Doğrusu **bugün**. ✍️ (\"bu gün\" yanlıştır.)", "w": "bu gün"},
+{"q": "gökyüzü nasıl yazılır?", "a": "Doğrusu **gökyüzü**. ✍️ (\"gök yüzü\" yanlıştır.)", "w": "gökyüzü", "kany": ["yaz", "ayrı", "bitişik", "imla"]},
+{"q": "gök yüzü mı gökyüzü mu?", "a": "Doğrusu **gökyüzü**. ✍️ (\"gök yüzü\" yanlıştır.)", "w": "gök yüzü"},
+{"q": "fark etmez nasıl yazılır?", "a": "Doğrusu **fark etmez**. ✍️ (\"farketmez\" yanlıştır.)", "w": "fark etmez", "kany": ["yaz", "ayrı", "bitişik", "imla"]},
+{"q": "farketmez mı fark etmez mu?", "a": "Doğrusu **fark etmez**. ✍️ (\"farketmez\" yanlıştır.)", "w": "farketmez"},
+{"q": "herhangi bir nasıl yazılır?", "a": "Doğrusu **herhangi bir**. ✍️ (\"herhangibir\" yanlıştır.)", "w": "herhangi bir", "kany": ["yaz", "ayrı", "bitişik", "imla"]},
+{"q": "herhangibir mı herhangi bir mu?", "a": "Doğrusu **herhangi bir**. ✍️ (\"herhangibir\" yanlıştır.)", "w": "herhangibir"},
+{"q": "traktör nasıl yazılır?", "a": "Doğrusu **traktör**. ✍️ (\"tıraktör\" yanlıştır.)", "w": "traktör", "kany": ["yaz", "ayrı", "bitişik", "imla"]},
+{"q": "tıraktör mı traktör mu?", "a": "Doğrusu **traktör**. ✍️ (\"tıraktör\" yanlıştır.)", "w": "tıraktör"},
 {"q": "de da nasıl yazılır?", "a": "Bağlaç olan **de/da** ayrı yazılır: \"Ali **de** geldi.\" Hâl eki olan -de/-da bitişik: \"okul**da**\". 😊", "w": "de", "kany": ["yaz", "ayrı", "bitişik", "nasıl", "kural"]},
 {"q": "ki bağlacı nasıl yazılır?", "a": "Bağlaç olan **ki** ayrı yazılır: \"Duydum **ki** gelmişsin.\" 😊", "w": "ki", "kany": ["yaz", "ayrı", "nasıl", "bağlaç"]},
 {"q": "mi soru eki nasıl yazılır?", "a": "Soru eki **mı/mi/mu/mü** her zaman ayrı yazılır: \"Geldin **mi**?\" 😊", "w": "mi", "kany": ["yaz", "ayrı", "soru", "ek"]},
-{"q": "sesli harfler nelerdir", "a": "Sesli (ünlü) harfler: a, e, ı, i, o, ö, u, ü. Toplam **8** tane! 😊", "k": ["sesli"]},
-{"q": "sessiz harfler nelerdir", "a": "Sessiz (ünsüz) harfler: b, c, ç, d, f, g, ğ, h, j, k, l, m, n, p, r, s, ş, t, v, y, z. Toplam **21** tane! 😊", "k": ["sessiz"]},
+{"q": "sesli harfler nelerdir", "a": "Sesli (ünlü) harfler: a, e, ı, i, o, ö, u, ü. Toplam **8** tane! 😊", "k": ["sesli", "harf"]},
+{"q": "sessiz harfler nelerdir", "a": "Sessiz (ünsüz) harfler: b, c, ç, d, f, g, ğ, h, j, k, l, m, n, p, r, s, ş, t, v, y, z. Toplam **21** tane! 😊", "k": ["sessiz", "harf"]},
 {"q": "alfabede kaç harf var", "a": "Türk alfabesinde **29** harf vardır: **8** sesli, **21** sessiz. 😊", "k": ["alfabe"], "kany": ["kaç harf", "kaç tane", "harf say"]},
 {"q": "alfabe sırası nedir", "a": "Türk alfabesi: a b c ç d e f g ğ h ı i j k l m n o ö p r s ş t u ü v y z. 😊", "k": ["alfabe", "sıra"]},
 {"q": "ğ harfi ile kelime başlar mı", "a": "Hayır, Türkçede hiçbir kelime **ğ** harfiyle **başlamaz**. 😊", "w": "ğ", "kany": ["başla"]},
@@ -1657,5 +1671,7 @@ window.OW_FAQ = [
 {"q": "hece nedir", "a": "**Hece**, ağzımızdan bir defada çıkan ses öbeğidir. Her hecede bir sesli harf vardır. Örnek: e-vi-miz. 😊", "k": ["hece nedir"]},
 {"q": "hece nasıl bölünür", "a": "Her hecede bir sesli vardır. İki sesli arasındaki tek sessiz sonraki heceye gider (a-ra-ba); iki sessiz yan yana bölünür (el-ma). 😊", "k": ["hece"], "kany": ["böl", "ayır", "kural", "nasıl"]},
 {"q": "noktalama işaretleri nelerdir", "a": "Başlıca noktalama: nokta (.), virgül (,), soru işareti (?), ünlem (!), iki nokta (:), kesme ('). 😊", "k": ["noktalama"]},
+{"q": "noktalı virgül nedir", "a": "**Noktalı virgül (;)** virgülle ayrılmış grupları ya da anlamca bağlı cümleleri birbirinden ayırır. 😊", "k": ["noktalı virgül"]},
+{"q": "cümle sonuna hangi işaret konur", "a": "Cümlenin sonuna anlamına göre **nokta (.)**, **soru işareti (?)** ya da **ünlem (!)** konur. 😊", "kany": ["cümle sonu", "cümlenin sonu", "kelimenin sonuna", "sonuna hangi", "sona hangi", "hangi işaret kon"]},
 {"q": "nasıl daha iyi okurum", "a": "Her gün biraz oku, kelimeleri hecelemeden bütün gör, noktada kısa dur. Acele etme, anlayarak oku. 📖😊", "k": ["oku"], "kany": ["nasıl", "daha iyi", "hızlı"]},
 ];
