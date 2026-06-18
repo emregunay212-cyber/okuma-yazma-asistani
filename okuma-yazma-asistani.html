@@ -576,6 +576,21 @@ function localAnswer(text){
   if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesinde\s+)?kaç\s*harf/)) && !WSTOP.has(wm[1]))
     return `**${wm[1]}** kelimesinde **${wm[1].length}** harf vardır. 😊`;
 
+  // Belirli bir harfin türü: "X sesli/sessiz mi" → harfi sınıflandır (bankadan ÖNCE)
+  const hm=t.match(/(?:^|[\s"'(])([a-zçğıöşü])(?:\s*harfi)?\s*(?:sesli|ünlü|sessiz|ünsüz)\s*mi/);
+  if(hm){
+    const h=hm[1];
+    if(SESLI.includes(h)) return `**${trUpper(h)}** harfi **sesli (ünlü)** harftir. 😊`;
+    if(SESSIZ.includes(h)) return `**${trUpper(h)}** harfi **sessiz (ünsüz)** harftir. 😊`;
+  }
+
+  // Sesli / sessiz harf listesi (genel) — "harf" geçmeli; "ünlü/ünsüz" eşanlamlarını da kapsar (bankadan ÖNCE)
+  const wantsSesli=/(sesli|ünlü)/.test(t)&&/harf/.test(t);
+  const wantsSessiz=/(sessiz|ünsüz)/.test(t)&&/harf/.test(t);
+  if(wantsSesli&&wantsSessiz) return `Sesli (ünlü) harfler: ${SESLI.join(', ')} → **8** tane.\nSessiz (ünsüz) harfler: ${SESSIZ.join(', ')} → **21** tane. 😊`;
+  if(wantsSesli) return `Sesli (ünlü) harfler: ${SESLI.join(', ')}. Toplam **8** tane! 😊`;
+  if(wantsSessiz) return `Sessiz (ünsüz) harfler: ${SESSIZ.join(', ')}. Toplam **21** tane! 😊`;
+
   // 1) Hazır soru bankası (kavramsal/kural sorular)
   const fq=faqLookup(t);
   if(fq!==null) return fq;
@@ -593,21 +608,6 @@ function localAnswer(text){
     }
     return 'Hece bölme kuralı: Her hecede **bir sesli harf** vardır. İki sesli arasındaki tek sessiz sonraki heceye gider (a-ra-ba); iki sessiz yan yana ise bölünür (el-ma, kar-tal). Örnek: top (1), el-ma (2), ke-le-bek (3). 😊';
   }
-
-  // Belirli bir harf sesli mi / sessiz mi?
-  const hm=t.match(/(?:^|[\s"'(])([a-zçğıöşü])(?:\s*harfi)?\s*(?:sesli|sessiz)\s*mi/);
-  if(hm){
-    const h=hm[1];
-    if(SESLI.includes(h)) return `**${trUpper(h)}** harfi **sesli (ünlü)** harftir. 😊`;
-    if(SESSIZ.includes(h)) return `**${trUpper(h)}** harfi **sessiz (ünsüz)** harftir. 😊`;
-  }
-
-  // Sesli / sessiz harfler (genel)
-  const sesliQ=/sesli/.test(t)&&/(harf|ünlü)/.test(t);
-  const sessizQ=/sessiz/.test(t)&&/(harf|ünsüz)/.test(t);
-  if(sesliQ&&sessizQ) return `Sesli (ünlü) harfler: ${SESLI.join(', ')} → **8** tane.\nSessiz (ünsüz) harfler: ${SESSIZ.join(', ')} → **21** tane. 😊`;
-  if(sesliQ) return `Sesli (ünlü) harfler: ${SESLI.join(', ')}. Toplam **8** tane! 😊`;
-  if(sessizQ) return `Sessiz (ünsüz) harfler: ${SESSIZ.join(', ')}. Toplam **21** tane! 😊`;
 
   // Alfabe / kaç harf
   if(/alfabe|kaç harf|harf var|harf sayısı/.test(t))

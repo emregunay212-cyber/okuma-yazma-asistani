@@ -68,10 +68,12 @@ koşmak yürümek atlamak gülmek ağlamak uyumak yemek içmek okumak yazmak çi
 """.split()
 
 # tekrarlari at, sirayi koru
+# "bir" hem sayi hem "a/an" artikeli — "bir kelimede kac harf" gibi sorularda yanlis eslesir
+STOP_WORDS = {"bir"}
 seen = set(); kelimeler = []
 for w in KELIMELER:
     w = w.strip().lower()
-    if w and w not in seen:
+    if w and w not in seen and w not in STOP_WORDS:
         seen.add(w); kelimeler.append(w)
 
 faq = []
@@ -117,7 +119,8 @@ IMLA = {
     "ambulans": "ambülans", "şoför": "şöför", "direksiyon": "direksyon",
     "makine": "makina", "tıraş": "traş", "sürpriz": "süpriz",
 }
-INTENT = ["yaz", "doğru", "nasıl", "ayrı", "bitişik", "hangi", "yanlış", "imla"]
+# Yalnizca YAZIM niyeti (genel "nasil/hangi" cikarildi: "film nasil cekilir" yanlis duzeltme tetikliyordu)
+INTENT = ["yaz", "ayrı", "bitişik", "imla"]
 for dogru, yanlis in IMLA.items():
     a = f"Doğrusu **{dogru}**. ✍️ (\"{yanlis}\" yanlıştır.)"
     # dogru form: yalnizca yazim niyeti varsa cevapla (gunluk kullanimda tetiklenmesin)
@@ -185,7 +188,13 @@ KURALLAR = [
      None, ["özel isim"], None),
     ("kelime nedir",
      "**Kelime (sözcük)**, anlamı olan ses ya da harf topluluğudur. Örnek: ev, okul, kalem. 😊",
-     None, ["kelime nedir"], None),
+     None, None, ["kelime nedir", "sözcük nedir", "kelime ne demek", "sözcük ne demek"]),
+    ("harf nedir",
+     "**Harf**, sesleri gösteren işaretlerdir. Türk alfabesinde **29** harf vardır: 8 ünlü (sesli), 21 ünsüz (sessiz). Örnek: a, b, c. 😊",
+     None, None, ["harf nedir", "harf ne demek"]),
+    ("i ile ı farkı nedir",
+     "Noktalı **i** ile noktasız **ı** AYRI harftir. Küçükleri: i / ı. Büyükleri: **İ** / **I**. Örnek: **i**p, **ı**şık. 😊",
+     None, None, ["ı ile i", "i ile ı", "ı i fark", "i ı fark", "noktalı", "noktasız"]),
     ("cümle nedir",
      "**Cümle**, bir duyguyu ya da düşünceyi tam anlatan kelimeler dizisidir. Büyük harfle başlar, noktalama ile biter. 😊",
      None, ["cümle nedir"], None),
