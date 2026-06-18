@@ -509,6 +509,9 @@ function trLower(s){
           .replace(/Ü/g,'ü').replace(/Ö/g,'ö').replace(/Ç/g,'ç').toLowerCase();
 }
 function trUpper(ch){ return ch==='i'?'İ':ch==='ı'?'I':ch.toUpperCase(); }
+// Aksan-duyarsız eşleştirme için ASCII'ye indir (1:1 — uzunluğu korur, indeksler hizalı kalır).
+// Çocuklar sık sık Türkçe karakter yazmaz: "kac harf", "buyuk", "unlu", "virgul", "ozel" ...
+function fold(s){ return s.replace(/ç/g,'c').replace(/ğ/g,'g').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ş/g,'s').replace(/ü/g,'u'); }
 
 // TDK heceleme: her kelimeyi kurala göre böler (iki sesli arası tek sessiz sonrakine; iki sessiz bölünür)
 function heceBol(w){
@@ -527,24 +530,34 @@ function heceBol(w){
   return parts;
 }
 
-// Hazır soru bankasında (window.OW_FAQ) ara — TAM kelime + niyet eşleşmesi
+// Hazır soru bankasında (window.OW_FAQ) ara — TAM kelime + niyet eşleşmesi (aksan-duyarsız)
+let _ffaq=null; // bankanın foldlanmış (ASCII) indeksi — ilk çağrıda bir kez kurulur
 function faqLookup(t){
   if(!window.OW_FAQ) return null;
-  const norm=' '+t.replace(/[^a-zçğıiöşü]+/g,' ').trim()+' ';
+  if(!_ffaq) _ffaq=window.OW_FAQ.map(e=>({
+    a:e.a,
+    w:e.w||null,                      // hedef kelime: TAM (Türkçe) eşleşir — yazım hatası tespiti korunur (proğram≠program)
+    k:e.k?e.k.map(fold):null,         // niyet anahtarları: foldlu (aksan-duyarsız)
+    kany:e.kany?e.kany.map(fold):null,
+    sc:(e.w?e.w.length:0)+(e.k?e.k.map(fold).join('').length:0)
+  }));
+  const normT=' '+t.replace(/[^a-zçğıiöşü]+/g,' ').trim()+' ';   // Türkçe korunur (w için)
+  const normF=' '+fold(t).replace(/[^a-z]+/g,' ').trim()+' ';     // foldlu (k/kany için)
   let best=null,score=-1;
-  for(const e of window.OW_FAQ){
-    if(e.w && !norm.includes(' '+e.w+' ')) continue;            // hedef kelime tam eşleşmeli
-    if(e.k && !e.k.every(kw=>norm.includes(kw))) continue;      // tüm niyet anahtarları
-    if(e.kany && !e.kany.some(kw=>norm.includes(kw))) continue; // en az bir niyet
+  for(const e of _ffaq){
+    if(e.w && !normT.includes(' '+e.w+' ')) continue;          // hedef kelime tam eşleşmeli (Türkçe)
+    if(e.k && !e.k.every(kw=>normF.includes(kw))) continue;    // tüm niyet anahtarları (foldlu)
+    if(e.kany && !e.kany.some(kw=>normF.includes(kw))) continue;// en az bir niyet (foldlu)
     if(!e.w && !e.k && !e.kany) continue;
-    const s=(e.w?e.w.length:0)+(e.k?e.k.join('').length:0);
-    if(s>score){best=e;score=s;}
+    if(e.sc>score){best=e;score=e.sc;}
   }
   return best?best.a:null;
 }
 
 // "WORD kaç harf / ilk-son harf / kaç sesli-sessiz" gibi kelime sorularında hedef kelime
-const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','kelimenin','bu','şu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane','alfabe','alfabede','alfabenin','türkçe','türkçede','türkçenin','cümle','cümlede','sözcük']);
+// NOT: 'şu' BİLEREK yok — foldlanınca 'su' olur ve gerçek "su" kelimesini engellerdi.
+const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','kelimenin','bu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane','alfabe','alfabede','alfabenin','türkçe','türkçede','türkçenin','cümle','cümlede','sözcük']);
+const WSTOPf=new Set([...WSTOP].map(fold)); // foldlanmış hâli (aksan-duyarsız kontrol için)
 
 // Okuma-yazma konu anahtarları — bir mesajda bunlardan hiçbiri geçmiyorsa soru KONU DIŞI sayılır
 const TOPIC_WORDS=['harf','ses','ünlü','ünsüz','alfabe','hece','kelime','sözcük','cümle','imla','yazım','yaz','oku','dikte','nokta','virgül','noktalama','ünlem','vurgu','satır','şiir','tekerleme','metin','paragraf','türkçe'];
@@ -555,28 +568,13 @@ function onTopic(text){
 }
 
 // Kullanıcı mesajına TDK-kesin cevap döndürür; yoksa null (o zaman modele sorulur)
+// Niyet eşleştirmesi foldlu metin (tf) üzerinde yapılır → "kac harf", "buyuk", "unlu" gibi
+// Türkçe karakter içermeyen çocuk yazımları da yakalanır. Kelime orijinal hâliyle (t) gösterilir.
 function localAnswer(text){
   const t=trLower(text);
+  const tf=fold(t);
 
-  // 0) Kelimeye özgü KESİN hesaplamalar — bankadan ÖNCE (genel banka cevabına takılmasın)
-  //    Örn: "kalem kaç sesli" → genel "sesli harfler" listesi yerine doğru sayım.
-  let wm;
-  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesin(?:in|de)\s+)?ilk harf/)) && !WSTOP.has(wm[1]))
-    return `**${wm[1]}** kelimesinin ilk harfi **${trUpper(wm[1][0])}** harfidir. 😊`;
-  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesin(?:in|de)\s+)?son harf/)) && !WSTOP.has(wm[1]))
-    return `**${wm[1]}** kelimesinin son harfi **${trUpper(wm[1].slice(-1))}** harfidir. 😊`;
-  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesinde\s+)?kaç\s*sessiz/)) && !WSTOP.has(wm[1])){
-    const n=[...wm[1]].filter(c=>SESSIZ.includes(c)).length;
-    return `**${wm[1]}** kelimesinde **${n}** sessiz harf vardır. 😊`;
-  }
-  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesinde\s+)?kaç\s*sesli/)) && !WSTOP.has(wm[1])){
-    const n=[...wm[1]].filter(c=>SESLI.includes(c)).length;
-    return `**${wm[1]}** kelimesinde **${n}** sesli harf vardır. 😊`;
-  }
-  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesinde\s+)?kaç\s*harf/)) && !WSTOP.has(wm[1]))
-    return `**${wm[1]}** kelimesinde **${wm[1].length}** harf vardır. 😊`;
-
-  // Belirli bir harfin türü: "X sesli/sessiz mi" → harfi sınıflandır (bankadan ÖNCE)
+  // Tek harf: "X sesli/sessiz mi" → harfi sınıflandır (orijinal t — harf kimliği korunur)
   const hm=t.match(/(?:^|[\s"'(])([a-zçğıöşü])(?:\s*harfi)?\s*(?:sesli|ünlü|sessiz|ünsüz)\s*mi/);
   if(hm){
     const h=hm[1];
@@ -584,57 +582,79 @@ function localAnswer(text){
     if(SESSIZ.includes(h)) return `**${trUpper(h)}** harfi **sessiz (ünsüz)** harftir. 😊`;
   }
 
-  // Sesli / sessiz harf listesi (genel) — "harf" geçmeli; "ünlü/ünsüz" eşanlamlarını da kapsar (bankadan ÖNCE)
-  const wantsSesli=/(sesli|ünlü)/.test(t)&&/harf/.test(t);
-  const wantsSessiz=/(sessiz|ünsüz)/.test(t)&&/harf/.test(t);
+  // Kelimeye özgü KESİN hesaplamalar — bankadan ÖNCE (genel banka cevabına takılmasın).
+  // tf (foldlu) ile yakala; kelimeyi t'den (orijinal) indeksle al (fold uzunluğu korur → hizalı).
+  const wq=re=>{const m=tf.match(re); if(!m)return null; const [s,e]=m.indices[1]; const w=t.slice(s,e); return WSTOPf.has(fold(w))?null:w;};
+  let w;
+  if((w=wq(/([a-z]{2,})\s+(?:kelimesin(?:in|de)\s+)?ilk harf/d)))
+    return `**${w}** kelimesinin ilk harfi **${trUpper(w[0])}** harfidir. 😊`;
+  if((w=wq(/([a-z]{2,})\s+(?:kelimesin(?:in|de)\s+)?son harf/d)))
+    return `**${w}** kelimesinin son harfi **${trUpper(w.slice(-1))}** harfidir. 😊`;
+  if((w=wq(/([a-z]{2,})\s+(?:kelimesinde\s+)?kac\s*sessiz/d))){
+    const n=[...w].filter(c=>SESSIZ.includes(c)).length;
+    return `**${w}** kelimesinde **${n}** sessiz harf vardır. 😊`;
+  }
+  if((w=wq(/([a-z]{2,})\s+(?:kelimesinde\s+)?kac\s*sesli/d))){
+    const n=[...w].filter(c=>SESLI.includes(c)).length;
+    return `**${w}** kelimesinde **${n}** sesli harf vardır. 😊`;
+  }
+  if((w=wq(/([a-z]{2,})\s+(?:kelimesinde\s+)?kac\s*harf/d)))
+    return `**${w}** kelimesinde **${w.length}** harf vardır. 😊`;
+
+  // Sesli / sessiz harf listesi (genel) — "harf" geçmeli; ünlü/ünsüz eşanlamlarını da kapsar
+  const wantsSesli=/(sesli|unlu)/.test(tf)&&/harf/.test(tf);
+  const wantsSessiz=/(sessiz|unsuz)/.test(tf)&&/harf/.test(tf);
   if(wantsSesli&&wantsSessiz) return `Sesli (ünlü) harfler: ${SESLI.join(', ')} → **8** tane.\nSessiz (ünsüz) harfler: ${SESSIZ.join(', ')} → **21** tane. 😊`;
   if(wantsSesli) return `Sesli (ünlü) harfler: ${SESLI.join(', ')}. Toplam **8** tane! 😊`;
   if(wantsSessiz) return `Sessiz (ünsüz) harfler: ${SESSIZ.join(', ')}. Toplam **21** tane! 😊`;
 
-  // 1) Hazır soru bankası (kavramsal/kural sorular)
+  // Hazır soru bankası (kavramsal/kural sorular)
   const fq=faqLookup(t);
   if(fq!==null) return fq;
 
-  // Heceleme
-  if(/hece/.test(t)){
-    const m=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesini\s+|kelimesi\s+)?hecele/)
-          ||t.match(/hecele\s+(?:bana\s+|şu\s+)?([a-zçğıöşü]{2,})/)
-          ||t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesi\s+)?kaç\s*hece/);
-    const skip=new Set(['kelime','kelimesini','kelimesi','bana','şu','bir','lütfen']);
-    if(m&&!skip.has(m[1])&&!/^(hece|böl|ayır)/.test(m[1])){
-      const word=m[1], parts=heceBol(word);
-      if(/kaç\s*hece/.test(t)) return `**${word}** kelimesinde **${parts.length}** hece var: ${parts.join('-')} 😊`;
-      return `**${word}** → ${parts.join(' - ')} (${parts.length} hece) 😊`;
+  // Heceleme (foldlu yakala, orijinal kelimeyi t'den al)
+  if(/hece/.test(tf)){
+    const m=tf.match(/([a-z]{2,})\s+(?:kelimesini\s+|kelimesi\s+)?hecele/d)
+          ||tf.match(/hecele\s+(?:bana\s+|su\s+)?([a-z]{2,})/d)
+          ||tf.match(/([a-z]{2,})\s+(?:kelimesi\s+)?kac\s*hece/d);
+    const skip=new Set(['kelime','kelimesini','kelimesi','bana','su','bir','lutfen']);
+    if(m){
+      const [s,e]=m.indices[1], word=t.slice(s,e), fw=fold(word);
+      if(!skip.has(fw)&&!/^(hece|bol|ayir)/.test(fw)){
+        const parts=heceBol(word);
+        if(/kac\s*hece/.test(tf)) return `**${word}** kelimesinde **${parts.length}** hece var: ${parts.join('-')} 😊`;
+        return `**${word}** → ${parts.join(' - ')} (${parts.length} hece) 😊`;
+      }
     }
     return 'Hece bölme kuralı: Her hecede **bir sesli harf** vardır. İki sesli arasındaki tek sessiz sonraki heceye gider (a-ra-ba); iki sessiz yan yana ise bölünür (el-ma, kar-tal). Örnek: top (1), el-ma (2), ke-le-bek (3). 😊';
   }
 
   // Alfabe / kaç harf
-  if(/alfabe|kaç harf|harf var|harf sayısı/.test(t))
+  if(/alfabe|kac harf|harf var|harf sayisi/.test(tf))
     return `Türk alfabesinde **29** harf vardır: **8** sesli (${SESLI.join(', ')}) ve **21** sessiz harf. 😊`;
 
   // Büyük harf
-  if(/büyük harf/.test(t))
+  if(/buyuk harf/.test(tf))
     return `Büyük harf iki yerde kullanılır:\n1) **Cümle başında**: Ali okula gitti.\n2) **Özel isimlerde**: Ali, Ayşe, İzmir, Türkiye. 👍`;
 
   // Noktalama
-  if(/nokta/.test(t)&&!/noktalama/.test(t))
+  if(/nokta/.test(tf)&&!/noktalama/.test(tf))
     return `**Nokta (.)** cümlenin sonuna konur. Örnek: Bugün hava çok güzel. 😊`;
-  if(/virgül/.test(t))
+  if(/virgul/.test(tf))
     return `**Virgül (,)** sıralanan kelimeleri birbirinden ayırır. Örnek: Elma, armut ve muz aldım. 😊`;
-  if(/soru işaret/.test(t))
+  if(/soru isaret/.test(tf))
     return `**Soru işareti (?)** soru cümlesinin sonuna konur. Örnek: Adın ne? 😊`;
-  if(/ünlem/.test(t))
+  if(/unlem/.test(tf))
     return `**Ünlem işareti (!)** sevinç, heyecan veya seslenme bildirir. Örnek: Yaşasın! 😊`;
-  if(/noktalama/.test(t))
+  if(/noktalama/.test(tf))
     return `Noktalama işaretleri:\n• **Nokta (.)** → cümle sonu\n• **Virgül (,)** → sıralama\n• **Soru işareti (?)** → soru sonu\n• **Ünlem (!)** → heyecan/seslenme 😊`;
 
   // İmla (genel)
-  if(/imla|yazım kural/.test(t))
+  if(/imla|yazim kural/.test(tf))
     return `Önemli imla kuralları:\n• Cümle **büyük harfle** başlar, **nokta** ile biter.\n• Özel isimler büyük harfle yazılır: Ali, Ankara.\n• "de/da" bağlacı ayrı yazılır: "Ali de geldi." 😊`;
 
   // Dikte kelimeleri
-  if(/dikte/.test(t)){
+  if(/dikte/.test(tf)){
     const havuz=['el','su','araba','kalem','okul','elma','kapı','masa','çanta','limon','balık','kitap','bulut','tavuk','sepet','yıldız','çiçek','top','defter','silgi'];
     const sec=[...havuz].sort(()=>Math.random()-.5).slice(0,10);
     return `İşte sana dikte kelimeleri:\n**${sec.join(', ')}.**\nBirini seçip hecelemeyi de deneyebilirsin! 😊`;
