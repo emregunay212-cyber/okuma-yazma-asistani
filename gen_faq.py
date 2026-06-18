@@ -149,7 +149,7 @@ KURALLAR = [
      None, ["sessiz"], None),
     ("alfabede kaç harf var",
      "Türk alfabesinde **29** harf vardır: **8** sesli, **21** sessiz. 😊",
-     None, ["alfabe"], None),
+     None, ["alfabe"], ["kaç harf", "kaç tane", "harf say"]),
     ("alfabe sırası nedir",
      "Türk alfabesi: a b c ç d e f g ğ h ı i j k l m n o ö p r s ş t u ü v y z. 😊",
      None, ["alfabe", "sıra"], None),

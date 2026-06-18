@@ -1637,7 +1637,7 @@ window.OW_FAQ = [
 {"q": "mi soru eki nasıl yazılır?", "a": "Soru eki **mı/mi/mu/mü** her zaman ayrı yazılır: \"Geldin **mi**?\" 😊", "w": "mi", "kany": ["yaz", "ayrı", "soru", "ek"]},
 {"q": "sesli harfler nelerdir", "a": "Sesli (ünlü) harfler: a, e, ı, i, o, ö, u, ü. Toplam **8** tane! 😊", "k": ["sesli"]},
 {"q": "sessiz harfler nelerdir", "a": "Sessiz (ünsüz) harfler: b, c, ç, d, f, g, ğ, h, j, k, l, m, n, p, r, s, ş, t, v, y, z. Toplam **21** tane! 😊", "k": ["sessiz"]},
-{"q": "alfabede kaç harf var", "a": "Türk alfabesinde **29** harf vardır: **8** sesli, **21** sessiz. 😊", "k": ["alfabe"]},
+{"q": "alfabede kaç harf var", "a": "Türk alfabesinde **29** harf vardır: **8** sesli, **21** sessiz. 😊", "k": ["alfabe"], "kany": ["kaç harf", "kaç tane", "harf say"]},
 {"q": "alfabe sırası nedir", "a": "Türk alfabesi: a b c ç d e f g ğ h ı i j k l m n o ö p r s ş t u ü v y z. 😊", "k": ["alfabe", "sıra"]},
 {"q": "ğ harfi ile kelime başlar mı", "a": "Hayır, Türkçede hiçbir kelime **ğ** harfiyle **başlamaz**. 😊", "w": "ğ", "kany": ["başla"]},
 {"q": "nokta nereye konur", "a": "**Nokta (.)** cümlenin sonuna konur. Örnek: Bugün hava çok güzel. 😊", "k": ["nokta"]},
