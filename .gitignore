@@ -1,0 +1,11 @@
+# API anahtarı ASLA repoya girmesin
+config.js
+
+# Yerel kayıtlar
+sorular.jsonl
+sorular-islendi.jsonl
+logs/
+
+# Vercel / Node
+.vercel/
+node_modules/

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Okuma Yazma Asistanım</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p50:#EEEDFE;--p100:#CECBF6;--p400:#7F77DD;--p600:#534AB7;--p800:#3C3489;
+  --t50:#E1F5EE;--t400:#1D9E75;--t800:#085041;
+  --a50:#FAEEDA;--a400:#BA7517;
+  --g50:#F8F7F4;--g100:#ECEAE4;--g200:#D4D2C9;--g400:#888780;--g600:#5F5E5A;--g900:#2C2C2A;
+  --rsm:8px;--rmd:12px;--rlg:18px;
+  --fn:'Nunito',system-ui,sans-serif;
+  --sw:260px;
+}
+html,body{height:100%;font-family:var(--fn);background:var(--g50);color:var(--g900);overflow:hidden}
+/* Layout */
+.app{display:flex;height:100vh}
+.sidebar{width:var(--sw);min-width:var(--sw);height:100vh;background:#fff;border-right:1px solid var(--g100);display:flex;flex-direction:column;transition:transform .28s ease;z-index:100}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;height:100vh}
+/* Sidebar */
+.sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:18px 16px 14px;border-bottom:1px solid var(--g100)}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-icon{font-size:24px}
+.logo-text{font-size:17px;font-weight:800;color:var(--p800)}
+.sidebar-close{display:none;background:none;border:none;font-size:18px;color:var(--g400);cursor:pointer;padding:2px 6px;border-radius:6px}
+.sidebar-close:hover{background:var(--g100)}
+.sidebar-nav{padding:12px 10px;flex:1;overflow-y:auto}
+.nav-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--g400);padding:0 8px;margin-bottom:6px;margin-top:4px}
+.nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border:none;background:none;border-radius:var(--rsm);font-family:var(--fn);font-size:13.5px;font-weight:600;color:var(--g600);cursor:pointer;text-align:left;transition:background .12s,color .12s;margin-bottom:2px}
+.nav-btn:hover{background:var(--g50);color:var(--g900)}
+.nav-btn.active{background:var(--p50);color:var(--p800)}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.sidebar-footer{padding:12px 16px;border-top:1px solid var(--g100)}
+.footer-note{font-size:11px;color:var(--g400);line-height:1.6}
+/* Overlay */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:90}
+/* Topbar */
+.topbar{height:54px;display:flex;align-items:center;gap:10px;padding:0 16px;background:#fff;border-bottom:1px solid var(--g100);flex-shrink:0}
+.menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;border-radius:var(--rsm)}
+.menu-btn span{display:block;width:20px;height:2px;background:var(--g600);border-radius:2px}
+.topbar-title{flex:1;font-size:14px;font-weight:700;color:var(--g900)}
+.clear-btn{background:none;border:none;font-size:17px;cursor:pointer;padding:5px 7px;border-radius:var(--rsm);opacity:.6;transition:opacity .15s}
+.clear-btn:hover{opacity:1;background:var(--g100)}
+/* Content area — switches between chat and game */
+.content{flex:1;overflow:hidden;position:relative}
+.panel{position:absolute;inset:0;overflow-y:auto;transition:opacity .18s}
+.panel.hidden{opacity:0;pointer-events:none}
+/* Chat */
+.chat-area{padding:20px 18px;display:flex;flex-direction:column;gap:12px;min-height:100%}
+.welcome{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 16px 12px;gap:10px}
+.welcome-avatar{font-size:48px;animation:bounceIn .5s ease}
+@keyframes bounceIn{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.welcome-title{font-size:20px;font-weight:800;color:var(--p800);line-height:1.35}
+.welcome-sub{font-size:13px;color:var(--g400);max-width:320px;line-height:1.6}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:480px;margin-top:6px}
+.qcard{background:#fff;border:1px solid var(--g100);border-radius:var(--rmd);padding:12px 8px;font-family:var(--fn);font-size:12.5px;font-weight:700;color:var(--g900);cursor:pointer;line-height:1.4;text-align:center;transition:border-color .12s,background .12s,transform .1s}
+.qcard small{font-weight:400;color:var(--g400);font-size:11px;display:block;margin-top:2px}
+.qcard:hover{border-color:var(--p400);background:var(--p50);transform:translateY(-1px)}
+/* Bubbles */
+.bubble-wrap{display:flex;gap:8px;align-items:flex-start;animation:fadeUp .18s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.bubble-wrap.user{flex-direction:row-reverse}
+.avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.avatar.ai{background:var(--p50)}
+.avatar.user-av{background:var(--t50)}
+.bubble{max-width:74%;padding:10px 14px;border-radius:var(--rlg);font-size:14.5px;line-height:1.65}
+.bubble.ai{background:#fff;color:var(--g900);border:1px solid var(--g100);border-top-left-radius:4px}
+.bubble.user{background:var(--p600);color:#fff;border-top-right-radius:4px}
+.bubble.loading{background:#fff;border:1px solid var(--g100)}
+.typing-dots{display:inline-flex;gap:5px;align-items:center;height:18px}
+.typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--p400);animation:dot 1.1s infinite}
+.typing-dots span:nth-child(2){animation-delay:.18s}
+.typing-dots span:nth-child(3){animation-delay:.36s}
+@keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+.bubble strong{font-weight:700}
+/* Input */
+.input-area{padding:10px 16px 8px;background:#fff;border-top:1px solid var(--g100);flex-shrink:0}
+.input-wrap{display:flex;gap:8px;align-items:flex-end;background:var(--g50);border:1.5px solid var(--g100);border-radius:var(--rlg);padding:7px 7px 7px 14px;transition:border-color .15s}
+.input-wrap:focus-within{border-color:var(--p400);background:#fff}
+.input-wrap textarea{flex:1;border:none;background:none;font-family:var(--fn);font-size:14.5px;font-weight:600;color:var(--g900);resize:none;outline:none;line-height:1.5;min-height:22px;max-height:110px}
+.input-wrap textarea::placeholder{color:var(--g400);font-weight:400}
+.send-btn{width:36px;height:36px;border-radius:50%;background:var(--p600);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .12s,transform .1s;color:#fff}
+.send-btn:hover{background:var(--p800)}
+.send-btn:active{transform:scale(.9)}
+.send-btn:disabled{opacity:.4;cursor:default}
+.input-hint{font-size:10.5px;color:var(--g400);text-align:center;margin-top:5px}
+/* API Key setup */
+.key-setup{background:#fff;border:1px solid var(--g100);border-radius:var(--rlg);padding:18px;margin:16px;text-align:center}
+.key-setup h2{font-size:15px;font-weight:700;color:var(--p800);margin-bottom:6px}
+.key-setup p{font-size:12.5px;color:var(--g600);margin-bottom:12px;line-height:1.6}
+.key-row{display:flex;gap:7px}
+.key-input{flex:1;padding:9px 11px;border:1.5px solid var(--g100);border-radius:var(--rsm);font-family:var(--fn);font-size:13px;color:var(--g900);outline:none}
+.key-input:focus{border-color:var(--p400)}
+.key-btn{padding:9px 14px;background:var(--p600);color:#fff;border:none;border-radius:var(--rsm);font-family:var(--fn);font-size:13px;font-weight:700;cursor:pointer}
+.key-btn:hover{background:var(--p800)}
+
+/* ===== OYUNLAR ===== */
+.game-panel{padding:16px;display:flex;flex-direction:column;gap:12px;min-height:100%}
+.game-header{text-align:center;padding:8px 0 4px}
+.game-header h2{font-size:18px;font-weight:800;color:var(--p800)}
+.game-header p{font-size:12.5px;color:var(--g400);margin-top:3px}
+.score-bar{display:flex;justify-content:center;gap:20px;margin:4px 0}
+.score-item{text-align:center}
+.score-num{font-size:22px;font-weight:800;color:var(--p600)}
+.score-lbl{font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.game-card{background:#fff;border:1px solid var(--g100);border-radius:var(--rlg);padding:18px;text-align:center}
+.game-question{font-size:17px;font-weight:700;color:var(--g900);margin-bottom:14px;line-height:1.5}
+.game-word{font-size:32px;font-weight:800;color:var(--p600);margin-bottom:6px;letter-spacing:2px}
+.game-hint{font-size:12px;color:var(--g400);margin-bottom:14px}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.opt-btn{padding:12px 8px;border:2px solid var(--g100);border-radius:var(--rmd);background:#fff;font-family:var(--fn);font-size:14px;font-weight:700;color:var(--g900);cursor:pointer;transition:all .15s}
+.opt-btn:hover{border-color:var(--p400);background:var(--p50)}
+.opt-btn.correct{border-color:#1D9E75;background:#E1F5EE;color:#085041}
+.opt-btn.wrong{border-color:#D85A30;background:#FAECE7;color:#4A1B0C}
+.opt-btn:disabled{cursor:default}
+.feedback{font-size:15px;font-weight:700;padding:10px;border-radius:var(--rmd);margin-top:8px;text-align:center}
+.feedback.ok{background:var(--t50);color:var(--t800)}
+.feedback.no{background:#FAECE7;color:#4A1B0C}
+.next-btn{padding:12px 24px;background:var(--p600);color:#fff;border:none;border-radius:var(--rmd);font-family:var(--fn);font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:background .12s}
+.next-btn:hover{background:var(--p800)}
+.game-select{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4px}
+.gsel-btn{background:#fff;border:1.5px solid var(--g100);border-radius:var(--rlg);padding:18px 12px;text-align:center;cursor:pointer;font-family:var(--fn);transition:border-color .12s,transform .1s}
+.gsel-btn:hover{border-color:var(--p400);transform:translateY(-2px)}
+.gsel-icon{font-size:32px;margin-bottom:6px}
+.gsel-name{font-size:14px;font-weight:700;color:var(--g900)}
+.gsel-desc{font-size:11.5px;color:var(--g400);margin-top:3px;line-height:1.4}
+/* Hece sürükleme oyunu */
+.hece-word{font-size:28px;font-weight:800;color:var(--p800);margin-bottom:6px}
+.hece-parts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.hece-chip{padding:8px 16px;border:2px solid var(--p100);border-radius:30px;font-size:16px;font-weight:700;background:var(--p50);color:var(--p800);cursor:pointer;transition:all .15s}
+.hece-chip:hover{border-color:var(--p400);transform:scale(1.05)}
+.hece-chip.selected{border-color:var(--p600);background:var(--p100)}
+.hece-answer{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:44px;padding:8px;border:2px dashed var(--g200);border-radius:var(--rmd);margin:8px 0;background:var(--g50)}
+.hece-answer .hece-chip{cursor:pointer}
+/* Sesli bul oyunu */
+.letter-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.letter-tile{width:48px;height:48px;border:2px solid var(--g100);border-radius:var(--rmd);font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;transition:all .15s;color:var(--g900)}
+.letter-tile:hover{border-color:var(--p400);background:var(--p50)}
+.letter-tile.picked.correct{border-color:#1D9E75;background:#E1F5EE;color:#085041}
+.letter-tile.picked.wrong{border-color:#D85A30;background:#FAECE7;color:#4A1B0C}
+/* Kelime tamamla */
+.blank-word{font-size:30px;font-weight:800;color:var(--p800);letter-spacing:4px;margin:10px 0}
+.blank-input{font-size:22px;font-weight:700;width:60px;text-align:center;border:none;border-bottom:3px solid var(--p400);background:none;outline:none;color:var(--p800);font-family:var(--fn)}
+/* Scrollbar */
+.panel::-webkit-scrollbar{width:4px}
+.panel::-webkit-scrollbar-thumb{background:var(--g200);border-radius:10px}
+/* Responsive */
+@media(max-width:680px){
+  :root{--sw:0px}
+  .sidebar{position:fixed;top:0;left:0;transform:translateX(-100%);box-shadow:4px 0 24px rgba(0,0,0,.12)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-close{display:block}
+  .overlay.show{display:block}
+  .menu-btn{display:flex}
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+  .bubble{max-width:88%}
+  .game-select{grid-template-columns:1fr 1fr}
+  .options-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo"><span class="logo-icon">📚</span><span class="logo-text">Asistanım</span></div>
+    <button class="sidebar-close" id="sidebarClose">✕</button>
+  </div>
+  <nav class="sidebar-nav">
+    <p class="nav-label">Sohbet</p>
+    <button class="nav-btn active" data-mode="chat" data-topic="genel"><span class="nav-icon">💬</span> Serbest Soru</button>
+    <button class="nav-btn" data-mode="chat" data-topic="harf"><span class="nav-icon">🔤</span> Harfler ve Sesler</button>
+    <button class="nav-btn" data-mode="chat" data-topic="hece"><span class="nav-icon">✂️</span> Hece Bölme</button>
+    <button class="nav-btn" data-mode="chat" data-topic="imla"><span class="nav-icon">📝</span> İmla Kuralları</button>
+    <button class="nav-btn" data-mode="chat" data-topic="noktalama"><span class="nav-icon">❓</span> Noktalama</button>
+    <button class="nav-btn" data-mode="chat" data-topic="dikte"><span class="nav-icon">✏️</span> Dikte Kelimeleri</button>
+    <p class="nav-label" style="margin-top:10px">Oyunlar</p>
+    <button class="nav-btn" data-mode="games"><span class="nav-icon">🎮</span> Oyunlar</button>
+  </nav>
+  <div class="sidebar-footer"><p class="footer-note">TDK kurallarına uygun<br>1. ve 2. sınıf için</p></div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+    <div class="topbar-title" id="topbarTitle">💬 Serbest Soru</div>
+    <button class="clear-btn" id="clearBtn">🗑️</button>
+  </header>
+
+  <div class="content">
+    <!-- CHAT PANELİ -->
+    <div class="panel" id="chatPanel">
+      <div class="chat-area" id="chatArea"></div>
+    </div>
+
+    <!-- OYUN PANELİ -->
+    <div class="panel hidden" id="gamePanel">
+      <div class="game-panel" id="gameArea"></div>
+    </div>
+  </div>
+
+  <footer class="input-area" id="inputArea">
+    <div class="input-wrap">
+      <textarea id="userInput" placeholder="Buraya yaz ve sor... 😊" rows="1"></textarea>
+      <button class="send-btn" id="sendBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <p class="input-hint">Enter ile gönder · Shift+Enter yeni satır</p>
+  </footer>
+</main>
+</div>
+
+<!-- API anahtarı dış dosyadan yüklenir: config.js içine yaz -->
+<script src="config.js"></script>
+<!-- Hazır TDK soru bankası (gen_faq.py ile üretilir) -->
+<script src="faq.js"></script>
+<script>
+// ===== CONFIG =====
+const SYSTEM_PROMPT = `Sen 1. ve 2. sınıf ilkokul öğrencilerine yönelik Türkçe okuma-yazma asistanısın.
+Yanıtların TDK (Türk Dil Kurumu) kurallarına TAM uymalı; asla sapma. Emin olmadığın kelimeyi kullanma, basit ve doğru bir örnek seç.
+ÜSLUP: Çok kısa, sade, sevecen. En fazla 3-4 cümle. Bol örnek, az teori. Çocuğu cesaretlendir. Karmaşık terim ve olumsuz dil yok.
+
+HARFLER:
+Ünlü (sesli): a e ı i o ö u ü (8 tane).
+Ünsüz (sessiz): b c ç d f g ğ h j k l m n p r s ş t v y z (21 tane).
+
+HECELEME — TDK kuralları (çok dikkatli uygula):
+1) Her hecede MUTLAKA bir ünlü vardır. Hece sayısı = ünlü sayısı. Örnek: top=1, el-ma=2, ke-le-bek=3.
+2) İki ünlü arasındaki tek ünsüz, sonraki heceye bağlanır: a-ra-ba, ka-pı, ma-sa, o-kul, a-rı.
+3) Yan yana iki ünsüz: ilki önceki heceye, ikincisi sonraki heceye: el-ma, kar-tal, çan-ta, as-lan, bir-lik.
+4) Yan yana üç ünsüz: ilk ikisi önceki, üçüncüsü sonraki heceye: Türk-çe, kork-mak.
+5) ÇOK ÖNEMLİ: Heceleri birleştirince kelime AYNEN çıkmalı. Harf EKLEME, ÇIKARMA, DEĞİŞTİRME.
+   Doğru: elma → el-ma.  YANLIŞ: el-ma-sa (fazladan "sa" eklenemez).
+Doğru örnekler: a-rı, ki-tap, ka-lem, çi-çek, bu-lut, li-mon, kar-puz, ta-vuk, se-pet.
+
+İMLA / NOKTALAMA:
+Büyük harf: cümle başı ve özel isimler (Ali, Ankara, Türkiye, Kızılırmak).
+Nokta: cümle sonu. Virgül: sıralama. Soru işareti: soru sonu. Ünlem: heyecan/seslenme.
+
+TÜRKÇE YAZIM (ÇOK DİKKAT):
+Türkçe karakterleri doğru kullan; i/ı, o/ö, u/ü, c/ç, g/ğ, s/ş AYRI harflerdir, karıştırma.
+"i" noktalıdır, "ı" noktasızdır. Özel isimleri her zaman doğru yaz: Ali (Alı DEĞİL!), Ayşe, İzmir, Türkiye.
+Kelimeleri her zaman doğru yaz; yanlış yazılmış veya uydurma kelime verme. Emin değilsen o kelimeyi hiç kullanma.
+
+ÖRNEK DOĞRU CEVAPLAR (bu üslup ve bu doğrulukla yanıtla):
+S: Sesli harfler nelerdir? → C: Sesli harfler: a, e, ı, i, o, ö, u, ü. Toplam 8 tane! 😊
+S: Büyük harf ne zaman kullanılır? → C: İki yerde: 1) Cümle başında (Ali okula gitti.) 2) Özel isimlerde (Ali, İzmir, Türkiye). 👍
+S: kitap kelimesini hecele → C: ki-tap, 2 hece. 😊
+S: ğ harfi sesli mi? → C: Hayır, "ğ" sessiz harftir. 😊`;
+
+const TOPIC_EXTRA = {
+  genel:'', harf:'Harfler ve sesler konusuna odaklan.',
+  hece:'Hece bölme konusuna odaklan. Bol örnek ver.',
+  imla:'TDK imla kurallarına odaklan.',
+  noktalama:'Noktalama işaretlerine odaklan.',
+  dikte:'Dikte için uygun kelimeler ver. 1.sınıf: 3-4 harf. 2.sınıf: 5-7 harf.',
+};
+const TOPIC_LABELS = {
+  genel:'💬 Serbest Soru', harf:'🔤 Harfler', hece:'✂️ Hece Bölme',
+  imla:'📝 İmla', noktalama:'❓ Noktalama', dikte:'✏️ Dikte',
+};
+const STARTERS = {
+  harf:'Sesli ve sessiz harfleri kısaca anlat.',
+  hece:'Hece bölmeyi kısaca anlat, birkaç örnek ver.',
+  imla:'En önemli imla kurallarını kısaca say.',
+  noktalama:'Noktalama işaretlerini kısaca anlat.',
+  dikte:'Bana 10 tane dikte kelimesi ver.',
+};
+
+// ===== STATE =====
+let messages=[], isLoading=false, currentTopic='genel', currentMode='chat';
+let API_KEY = (window.OW_API_KEY||'').trim() || localStorage.getItem('owApiKey') || '';
+let gameScore={correct:0,total:0}, currentGame=null, gameState={};
+
+// ===== OYUN VERİSİ =====
+const WORDS = [
+  {w:'arı',h:['a','rı']},{w:'top',h:['top']},{w:'masa',h:['ma','sa']},
+  {w:'kitap',h:['ki','tap']},{w:'okul',h:['o','kul']},{w:'elma',h:['el','ma']},
+  {w:'kapı',h:['ka','pı']},{w:'kalem',h:['ka','lem']},{w:'çiçek',h:['çi','çek']},
+  {w:'bulut',h:['bu','lut']},{w:'tavuk',h:['ta','vuk']},{w:'bebek',h:['be','bek']},
+  {w:'ayak',h:['a','yak']},{w:'yılan',h:['yı','lan']},{w:'çanta',h:['çan','ta']},
+  {w:'sepet',h:['se','pet']},{w:'limon',h:['li','mon']},{w:'karpuz',h:['kar','puz']},
+];
+const SESLI=['a','e','ı','i','o','ö','u','ü'];
+const SESSIZ=['b','c','ç','d','f','g','ğ','h','j','k','l','m','n','p','r','s','ş','t','v','y','z'];
+
+const BLANK_WORDS=[
+  {display:'e_ma',answer:'l',hint:'Kırmızı meyve'},
+  {display:'ki_ap',answer:'t',hint:'Okuruz'},
+  {display:'_kul',answer:'o',hint:'Öğrencilerin gittiği yer'},
+  {display:'ka_em',answer:'l',hint:'Yazı yazarız'},
+  {display:'ar_',answer:'ı',hint:'Bal yapar'},
+  {display:'mas_',answer:'a',hint:'Üstüne oturulur... hayır, üstüne yazılır'},
+  {display:'to_',answer:'p',hint:'Oynarız'},
+  {display:'bul_t',answer:'u',hint:'Gökyüzünde uçar'},
+  {display:'kap_',answer:'ı',hint:'Çalar, girersin'},
+  {display:'çan_a',answer:'t',hint:'Okula taşırız'},
+];
+
+// ===== DOM =====
+const chatArea=document.getElementById('chatArea');
+const gameArea=document.getElementById('gameArea');
+const userInput=document.getElementById('userInput');
+const sendBtn=document.getElementById('sendBtn');
+const clearBtn=document.getElementById('clearBtn');
+const menuBtn=document.getElementById('menuBtn');
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+const sidebarClose=document.getElementById('sidebarClose');
+const topbarTitle=document.getElementById('topbarTitle');
+const chatPanel=document.getElementById('chatPanel');
+const gamePanel=document.getElementById('gamePanel');
+const inputArea=document.getElementById('inputArea');
+
+// ===== SIDEBAR =====
+menuBtn.addEventListener('click',()=>{sidebar.classList.add('open');overlay.classList.add('show');});
+sidebarClose.addEventListener('click',closeSidebar);
+overlay.addEventListener('click',closeSidebar);
+function closeSidebar(){sidebar.classList.remove('open');overlay.classList.remove('show');}
+
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const mode=btn.dataset.mode;
+    if(mode==='games'){
+      switchToGames();
+    } else {
+      const topic=btn.dataset.topic||'genel';
+      switchToChat(topic);
+    }
+    closeSidebar();
+  });
+});
+
+function switchToChat(topic){
+  currentMode='chat'; currentTopic=topic;
+  topbarTitle.textContent=TOPIC_LABELS[topic]||'💬 Sohbet';
+  chatPanel.classList.remove('hidden');
+  gamePanel.classList.add('hidden');
+  inputArea.style.display='';
+  messages=[];
+  showWelcome();
+  if(topic!=='genel') sendQuick(STARTERS[topic]);
+}
+
+function switchToGames(){
+  currentMode='games';
+  topbarTitle.textContent='🎮 Oyunlar';
+  chatPanel.classList.add('hidden');
+  gamePanel.classList.remove('hidden');
+  inputArea.style.display='none';
+  showGameSelect();
+}
+
+clearBtn.addEventListener('click',()=>{
+  if(currentMode==='chat'){messages=[];showWelcome();}
+  else showGameSelect();
+});
+
+// ===== INPUT =====
+userInput.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
+});
+userInput.addEventListener('input',()=>{
+  userInput.style.height='auto';
+  userInput.style.height=Math.min(userInput.scrollHeight,110)+'px';
+});
+sendBtn.addEventListener('click',sendMessage);
+
+// ===== DETERMİNİSTİK TDK CEVAPLARI (model gerektirmez, her zaman doğru) =====
+const V_SET=new Set([...'aeıioöuüAEIİOÖUÜ']);
+function trLower(s){
+  return s.replace(/İ/g,'i').replace(/I/g,'ı').replace(/Ş/g,'ş').replace(/Ğ/g,'ğ')
+          .replace(/Ü/g,'ü').replace(/Ö/g,'ö').replace(/Ç/g,'ç').toLowerCase();
+}
+function trUpper(ch){ return ch==='i'?'İ':ch==='ı'?'I':ch.toUpperCase(); }
+
+// TDK heceleme: her kelimeyi kurala göre böler (iki sesli arası tek sessiz sonrakine; iki sessiz bölünür)
+function heceBol(w){
+  w=(w||'').trim();
+  const vi=[];
+  for(let i=0;i<w.length;i++) if(V_SET.has(w[i])) vi.push(i);
+  if(vi.length<=1) return [w];
+  const cuts=[];
+  for(let k=0;k<vi.length-1;k++){
+    const a=vi[k], b=vi[k+1], between=b-a-1;
+    cuts.push(between===0 ? a+1 : b-1);
+  }
+  const parts=[]; let start=0;
+  for(const c of cuts){ parts.push(w.slice(start,c)); start=c; }
+  parts.push(w.slice(start));
+  return parts;
+}
+
+// Hazır soru bankasında (window.OW_FAQ) ara — TAM kelime + niyet eşleşmesi
+function faqLookup(t){
+  if(!window.OW_FAQ) return null;
+  const norm=' '+t.replace(/[^a-zçğıiöşü]+/g,' ').trim()+' ';
+  let best=null,score=-1;
+  for(const e of window.OW_FAQ){
+    if(e.w && !norm.includes(' '+e.w+' ')) continue;            // hedef kelime tam eşleşmeli
+    if(e.k && !e.k.every(kw=>norm.includes(kw))) continue;      // tüm niyet anahtarları
+    if(e.kany && !e.kany.some(kw=>norm.includes(kw))) continue; // en az bir niyet
+    if(!e.w && !e.k && !e.kany) continue;
+    const s=(e.w?e.w.length:0)+(e.k?e.k.join('').length:0);
+    if(s>score){best=e;score=s;}
+  }
+  return best?best.a:null;
+}
+
+// "WORD kaç harf / ilk-son harf / kaç sesli-sessiz" gibi kelime sorularında hedef kelime
+const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','bu','şu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane']);
+
+// Kullanıcı mesajına TDK-kesin cevap döndürür; yoksa null (o zaman modele sorulur)
+function localAnswer(text){
+  const t=trLower(text);
+
+  // 0) Hazır soru bankası — ÖNCE buna bak
+  const fq=faqLookup(t);
+  if(fq!==null) return fq;
+
+  // Kelime + harf/ses bilgisi (bankada olmayan kelimeler için de deterministik)
+  let wm;
+  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesin(?:in|de)\s+)?ilk harf/)) && !WSTOP.has(wm[1]))
+    return `**${wm[1]}** kelimesinin ilk harfi **${trUpper(wm[1][0])}** harfidir. 😊`;
+  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesin(?:in|de)\s+)?son harf/)) && !WSTOP.has(wm[1]))
+    return `**${wm[1]}** kelimesinin son harfi **${trUpper(wm[1].slice(-1))}** harfidir. 😊`;
+  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesinde\s+)?kaç\s*sessiz/)) && !WSTOP.has(wm[1])){
+    const n=[...wm[1]].filter(c=>SESSIZ.includes(c)).length;
+    return `**${wm[1]}** kelimesinde **${n}** sessiz harf vardır. 😊`;
+  }
+  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesinde\s+)?kaç\s*sesli/)) && !WSTOP.has(wm[1])){
+    const n=[...wm[1]].filter(c=>SESLI.includes(c)).length;
+    return `**${wm[1]}** kelimesinde **${n}** sesli harf vardır. 😊`;
+  }
+  if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesinde\s+)?kaç\s*harf/)) && !WSTOP.has(wm[1]))
+    return `**${wm[1]}** kelimesinde **${wm[1].length}** harf vardır. 😊`;
+
+  // Heceleme
+  if(/hece/.test(t)){
+    const m=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesini\s+|kelimesi\s+)?hecele/)
+          ||t.match(/hecele\s+(?:bana\s+|şu\s+)?([a-zçğıöşü]{2,})/)
+          ||t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesi\s+)?kaç\s*hece/);
+    const skip=new Set(['kelime','kelimesini','kelimesi','bana','şu','bir','lütfen']);
+    if(m&&!skip.has(m[1])&&!/^(hece|böl|ayır)/.test(m[1])){
+      const word=m[1], parts=heceBol(word);
+      if(/kaç\s*hece/.test(t)) return `**${word}** kelimesinde **${parts.length}** hece var: ${parts.join('-')} 😊`;
+      return `**${word}** → ${parts.join(' - ')} (${parts.length} hece) 😊`;
+    }
+    return 'Hece bölme kuralı: Her hecede **bir sesli harf** vardır. İki sesli arasındaki tek sessiz sonraki heceye gider (a-ra-ba); iki sessiz yan yana ise bölünür (el-ma, kar-tal). Örnek: top (1), el-ma (2), ke-le-bek (3). 😊';
+  }
+
+  // Belirli bir harf sesli mi / sessiz mi?
+  const hm=t.match(/(?:^|[\s"'(])([a-zçğıöşü])(?:\s*harfi)?\s*(?:sesli|sessiz)\s*mi/);
+  if(hm){
+    const h=hm[1];
+    if(SESLI.includes(h)) return `**${trUpper(h)}** harfi **sesli (ünlü)** harftir. 😊`;
+    if(SESSIZ.includes(h)) return `**${trUpper(h)}** harfi **sessiz (ünsüz)** harftir. 😊`;
+  }
+
+  // Sesli / sessiz harfler (genel)
+  const sesliQ=/sesli/.test(t)&&/(harf|ünlü)/.test(t);
+  const sessizQ=/sessiz/.test(t)&&/(harf|ünsüz)/.test(t);
+  if(sesliQ&&sessizQ) return `Sesli (ünlü) harfler: ${SESLI.join(', ')} → **8** tane.\nSessiz (ünsüz) harfler: ${SESSIZ.join(', ')} → **21** tane. 😊`;
+  if(sesliQ) return `Sesli (ünlü) harfler: ${SESLI.join(', ')}. Toplam **8** tane! 😊`;
+  if(sessizQ) return `Sessiz (ünsüz) harfler: ${SESSIZ.join(', ')}. Toplam **21** tane! 😊`;
+
+  // Alfabe / kaç harf
+  if(/alfabe|kaç harf|harf var|harf sayısı/.test(t))
+    return `Türk alfabesinde **29** harf vardır: **8** sesli (${SESLI.join(', ')}) ve **21** sessiz harf. 😊`;
+
+  // Büyük harf
+  if(/büyük harf/.test(t))
+    return `Büyük harf iki yerde kullanılır:\n1) **Cümle başında**: Ali okula gitti.\n2) **Özel isimlerde**: Ali, Ayşe, İzmir, Türkiye. 👍`;
+
+  // Noktalama
+  if(/nokta/.test(t)&&!/noktalama/.test(t))
+    return `**Nokta (.)** cümlenin sonuna konur. Örnek: Bugün hava çok güzel. 😊`;
+  if(/virgül/.test(t))
+    return `**Virgül (,)** sıralanan kelimeleri birbirinden ayırır. Örnek: Elma, armut ve muz aldım. 😊`;
+  if(/soru işaret/.test(t))
+    return `**Soru işareti (?)** soru cümlesinin sonuna konur. Örnek: Adın ne? 😊`;
+  if(/ünlem/.test(t))
+    return `**Ünlem işareti (!)** sevinç, heyecan veya seslenme bildirir. Örnek: Yaşasın! 😊`;
+  if(/noktalama/.test(t))
+    return `Noktalama işaretleri:\n• **Nokta (.)** → cümle sonu\n• **Virgül (,)** → sıralama\n• **Soru işareti (?)** → soru sonu\n• **Ünlem (!)** → heyecan/seslenme 😊`;
+
+  // İmla (genel)
+  if(/imla|yazım kural/.test(t))
+    return `Önemli imla kuralları:\n• Cümle **büyük harfle** başlar, **nokta** ile biter.\n• Özel isimler büyük harfle yazılır: Ali, Ankara.\n• "de/da" bağlacı ayrı yazılır: "Ali de geldi." 😊`;
+
+  // Dikte kelimeleri
+  if(/dikte/.test(t)){
+    const havuz=['el','su','araba','kalem','okul','elma','kapı','masa','çanta','limon','balık','kitap','bulut','tavuk','sepet','yıldız','çiçek','top','defter','silgi'];
+    const sec=[...havuz].sort(()=>Math.random()-.5).slice(0,10);
+    return `İşte sana dikte kelimeleri:\n**${sec.join(', ')}.**\nBirini seçip hecelemeyi de deneyebilirsin! 😊`;
+  }
+
+  return null; // deterministik cevap yok → modele sor
+}
+
+// ===== CHAT =====
+function showWelcome(){
+  chatArea.innerHTML=`
+  <div class="welcome">
+    <div class="welcome-avatar">📚</div>
+    <h1 class="welcome-title">Merhaba!<br>Okuma yazma asistanınım 😊</h1>
+    <p class="welcome-sub">Harfler, heceler, imla ve noktalama hakkında her şeyi sorabilirsin.</p>
+    <div class="quick-grid">
+      <button class="qcard" onclick="sendQuick('Büyük harf ne zaman kullanılır?')">🔠 Büyük harf<br><small>ne zaman?</small></button>
+      <button class="qcard" onclick="sendQuick('Nokta nereye konur?')">🔴 Nokta<br><small>nereye?</small></button>
+      <button class="qcard" onclick="sendQuick('Hece nasıl bölünür?')">✂️ Hece<br><small>bölme</small></button>
+      <button class="qcard" onclick="sendQuick('Sesli harf nedir?')">🔊 Sesli harf<br><small>nedir?</small></button>
+      <button class="qcard" onclick="sendQuick('Kısa bir okuma egzersizi yap')">📖 Egzersiz<br><small>yapalım</small></button>
+      <button class="qcard" onclick="sendQuick('Dikte kelimeleri ver')">✏️ Dikte<br><small>kelimeleri</small></button>
+    </div>
+  </div>`;
+  // Anahtar artık yerelde config.js'ten, canlıda /api/gemini proxy'sinden gelir — ekrandan istenmez.
+}
+
+function showKeySetup(){
+  const d=document.createElement('div');
+  d.className='key-setup';d.id='keySetup';
+  d.innerHTML=`<h2>🔑 API Anahtarı Gir</h2>
+  <p>Uygulamayı kullanmak için Google Gemini API anahtarı gerekiyor.<br>Bir kez gir, kaydedilir.</p>
+  <div class="key-row">
+    <input class="key-input" type="password" id="keyInput" placeholder="AIza..."/>
+    <button class="key-btn" onclick="saveKey()">Kaydet</button>
+  </div>`;
+  chatArea.appendChild(d);
+}
+
+function saveKey(){
+  const v=document.getElementById('keyInput').value.trim();
+  if(!v.startsWith('AIza')){alert('Geçersiz anahtar! Gemini anahtarı "AIza" ile başlar.');return;}
+  API_KEY=v;localStorage.setItem('owApiKey',v);
+  document.getElementById('keySetup')?.remove();
+}
+
+async function sendMessage(){
+  const text=userInput.value.trim();
+  if(!text||isLoading) return;
+  userInput.value='';userInput.style.height='auto';
+  await chat(text);
+}
+
+window.sendQuick=async function(text){
+  if(isLoading) return;
+  await chat(text);
+};
+
+// Gemini'ye düşen (bankada olmayan) soru-cevabı denetim için sunucuya kaydet
+function logQA(q,a){
+  try{
+    fetch('/log',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({q,a,topic:currentTopic,model:'gemini-2.5-flash-lite'})}).catch(()=>{});
+  }catch(e){}
+}
+
+async function chat(userText){
+  chatArea.querySelector('.welcome')?.remove();
+  document.getElementById('keySetup')?.remove();
+  appendBubble(userText,'user');
+  messages.push({role:'user',content:userText});
+  // 1) Deterministik TDK cevabı — model gerektirmez, her zaman doğru (API'siz de çalışır)
+  const local=localAnswer(userText);
+  if(local!==null){
+    appendBubble(local,'ai');
+    messages.push({role:'assistant',content:local});
+    return;
+  }
+  // 2) Serbest soru → model gerekir
+  isLoading=true;sendBtn.disabled=true;
+  const loadEl=appendLoading();
+  try{
+    const extra=TOPIC_EXTRA[currentTopic]||'';
+    const sys=SYSTEM_PROMPT+(extra?'\n'+extra:'');
+    // Sohbet geçmişini Gemini formatına çevir (assistant -> model, parts)
+    const contents=messages.map(m=>({
+      role:m.role==='assistant'?'model':'user',
+      parts:[{text:m.content}]
+    }));
+    const body=JSON.stringify({
+      system_instruction:{parts:[{text:sys}]},
+      contents,
+      generationConfig:{maxOutputTokens:400,temperature:0.2,thinkingConfig:{thinkingBudget:0}} // düşük sıcaklık + düşünme kapalı = en ucuz
+    });
+    // Yerelde config.js anahtarı varsa doğrudan Gemini; yoksa (canlıda) sunucu tarafı proxy
+    const res = API_KEY
+      ? await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key='+encodeURIComponent(API_KEY),{method:'POST',headers:{'Content-Type':'application/json'},body})
+      : await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body});
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error?.message||'Hata');
+    const reply=data.candidates?.[0]?.content?.parts?.map(p=>p.text).join('')||'Bir sorun çıktı 😊';
+    loadEl.remove();
+    appendBubble(reply,'ai');
+    messages.push({role:'assistant',content:reply});
+    logQA(userText,reply); // denetim için kaydet (yalnızca model cevapları)
+  }catch(err){
+    loadEl.remove();
+    appendBubble('Bir sorun çıktı 😊\n\n🔧 Gerçek hata: '+(err&&err.message?err.message:String(err)),'ai');
+    console.error(err);
+  }
+  isLoading=false;sendBtn.disabled=false;userInput.focus();
+}
+
+function appendBubble(text,type){
+  const wrap=document.createElement('div');
+  wrap.className='bubble-wrap'+(type==='user'?' user':'');
+  const av=document.createElement('div');
+  av.className='avatar '+(type==='user'?'user-av':'ai');
+  av.textContent=type==='user'?'🧒':'📚';
+  const bub=document.createElement('div');
+  bub.className='bubble '+type;
+  bub.innerHTML=fmt(text);
+  if(type==='user'){wrap.appendChild(bub);wrap.appendChild(av);}
+  else{wrap.appendChild(av);wrap.appendChild(bub);}
+  chatArea.appendChild(wrap);
+  chatArea.scrollTop=chatArea.scrollHeight;
+  return wrap;
+}
+
+function appendLoading(){
+  const wrap=document.createElement('div');
+  wrap.className='bubble-wrap';
+  const av=document.createElement('div');av.className='avatar ai';av.textContent='📚';
+  const bub=document.createElement('div');bub.className='bubble ai loading';
+  bub.innerHTML='<div class="typing-dots"><span></span><span></span><span></span></div>';
+  wrap.appendChild(av);wrap.appendChild(bub);
+  chatArea.appendChild(wrap);chatArea.scrollTop=chatArea.scrollHeight;
+  return wrap;
+}
+
+function fmt(t){
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g,'<em>$1</em>')
+    .replace(/\n/g,'<br>');
+}
+
+// ===== OYUNLAR =====
+function showGameSelect(){
+  currentGame=null;gameScore={correct:0,total:0};
+  gameArea.innerHTML=`
+  <div class="game-header"><h2>🎮 Oyunlar</h2><p>Hangi oyunu oynamak istersin?</p></div>
+  <div class="game-select">
+    <button class="gsel-btn" onclick="startGame('hece')">
+      <div class="gsel-icon">✂️</div>
+      <div class="gsel-name">Hece Bul</div>
+      <div class="gsel-desc">Kelimelerin hecelerini bul</div>
+    </button>
+    <button class="gsel-btn" onclick="startGame('sesli')">
+      <div class="gsel-icon">🔊</div>
+      <div class="gsel-name">Sesli mi Sessiz mi?</div>
+      <div class="gsel-desc">Harfi doğru sınıfla</div>
+    </button>
+    <button class="gsel-btn" onclick="startGame('kelime')">
+      <div class="gsel-icon">🔤</div>
+      <div class="gsel-name">Kelimeyi Tamamla</div>
+      <div class="gsel-desc">Eksik harfi bul</div>
+    </button>
+    <button class="gsel-btn" onclick="startGame('hecesat')">
+      <div class="gsel-icon">🔢</div>
+      <div class="gsel-name">Hece Sayısı</div>
+      <div class="gsel-desc">Kaç hece var?</div>
+    </button>
+  </div>`;
+}
+
+window.startGame=function(type){
+  currentGame=type;gameScore={correct:0,total:0};
+  if(type==='hece') nextHece();
+  else if(type==='sesli') nextSesli();
+  else if(type==='kelime') nextKelime();
+  else if(type==='hecesat') nextHeceSat();
+};
+
+// --- OYUN 1: Hece Bul (seçenekli) ---
+function nextHece(){
+  const item=rand(WORDS);
+  const correct=item.h.join('-');
+  // 3 yanlış seçenek üret
+  let wrongs=[];
+  while(wrongs.length<3){
+    const w=rand(WORDS);
+    const opt=w.h.join('-');
+    if(opt!==correct&&!wrongs.includes(opt)) wrongs.push(opt);
+  }
+  const opts=shuffle([correct,...wrongs]);
+  gameArea.innerHTML=`
+  <div class="game-header"><h2>✂️ Hece Bul</h2><p>Bu kelimenin doğru hece bölümünü seç</p></div>
+  ${scoreBar()}
+  <div class="game-card">
+    <div class="game-word">${item.w}</div>
+    <div class="game-hint">Doğru hece bölümünü seç!</div>
+    <div class="options-grid" id="opts">
+      ${opts.map(o=>`<button class="opt-btn" onclick="checkHece(this,'${o}','${correct}')">${o}</button>`).join('')}
+    </div>
+    <div id="fb"></div>
+  </div>`;
+}
+
+window.checkHece=function(btn,chosen,correct){
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const ok=chosen===correct;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok) document.querySelectorAll('.opt-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+  gameScore.total++;if(ok)gameScore.correct++;
+  document.getElementById('fb').innerHTML=`
+  <div class="feedback ${ok?'ok':'no'}">${ok?'✅ Harika! Doğru!':'❌ Olmadı. Doğrusu: '+correct}</div>
+  <button class="next-btn" onclick="nextHece()">Devam Et →</button>`;
+};
+
+// --- OYUN 2: Sesli mi Sessiz mi? ---
+function nextSesli(){
+  const isSesli=Math.random()>0.5;
+  const letter=isSesli?rand(SESLI):rand(SESSIZ);
+  gameState={letter,isSesli};
+  gameArea.innerHTML=`
+  <div class="game-header"><h2>🔊 Sesli mi Sessiz mi?</h2><p>Bu harf sesli mi yoksa sessiz mi?</p></div>
+  ${scoreBar()}
+  <div class="game-card">
+    <div class="game-word" style="font-size:56px">${letter.toUpperCase()}</div>
+    <div class="game-hint">Bu harf sesli mi, sessiz mi?</div>
+    <div class="options-grid">
+      <button class="opt-btn" onclick="checkSesli(true)">🔊 Sesli</button>
+      <button class="opt-btn" onclick="checkSesli(false)">🔇 Sessiz</button>
+    </div>
+    <div id="fb"></div>
+  </div>`;
+}
+
+window.checkSesli=function(chosen){
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const ok=chosen===gameState.isSesli;
+  const btns=document.querySelectorAll('.opt-btn');
+  if(gameState.isSesli){btns[0].classList.add('correct');if(!ok)btns[1].classList.add('wrong');}
+  else{btns[1].classList.add('correct');if(!ok)btns[0].classList.add('wrong');}
+  gameScore.total++;if(ok)gameScore.correct++;
+  const sesliList='a, e, ı, i, o, ö, u, ü';
+  document.getElementById('fb').innerHTML=`
+  <div class="feedback ${ok?'ok':'no'}">${ok?'✅ Doğru! Aferin!':'❌ Yanlış! '+gameState.letter.toUpperCase()+' harfi '+(gameState.isSesli?'seslidir 🔊':'sessizdir 🔇')}</div>
+  <div style="font-size:12px;color:var(--g400);margin:6px 0">Sesli harfler: ${sesliList}</div>
+  <button class="next-btn" onclick="nextSesli()">Devam Et →</button>`;
+};
+
+// --- OYUN 3: Kelimeyi Tamamla ---
+function nextKelime(){
+  const item=rand(BLANK_WORDS);
+  gameState={answer:item.answer};
+  const display=item.display.replace('_','<span style="color:var(--p400)">_</span>');
+  gameArea.innerHTML=`
+  <div class="game-header"><h2>🔤 Kelimeyi Tamamla</h2><p>Eksik harfi bul!</p></div>
+  ${scoreBar()}
+  <div class="game-card">
+    <div class="game-hint">İpucu: ${item.hint}</div>
+    <div class="blank-word">${display}</div>
+    <div style="margin:10px 0">
+      <input class="blank-input" id="blankInput" maxlength="1" placeholder="?" autofocus/>
+    </div>
+    <button class="next-btn" onclick="checkKelime()">Kontrol Et ✓</button>
+    <div id="fb"></div>
+  </div>`;
+  document.getElementById('blankInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkKelime();});
+}
+
+window.checkKelime=function(){
+  const val=document.getElementById('blankInput').value.trim().toLowerCase();
+  if(!val) return;
+  const ok=val===gameState.answer;
+  gameScore.total++;if(ok)gameScore.correct++;
+  document.getElementById('blankInput').disabled=true;
+  document.querySelector('.next-btn').disabled=true;
+  document.getElementById('fb').innerHTML=`
+  <div class="feedback ${ok?'ok':'no'}" style="margin-top:10px">${ok?'✅ Süpersin! Doğru harf: "'+gameState.answer+'"':'❌ Değil! Doğru harf: "'+gameState.answer+'"'}</div>
+  <button class="next-btn" onclick="nextKelime()">Devam Et →</button>`;
+};
+
+// --- OYUN 4: Hece Sayısı ---
+function nextHeceSat(){
+  const item=rand(WORDS);
+  const correct=item.h.length;
+  const opts=shuffle([...new Set([1,2,3,correct])].slice(0,4));
+  gameArea.innerHTML=`
+  <div class="game-header"><h2>🔢 Hece Sayısı</h2><p>Bu kelimede kaç hece var?</p></div>
+  ${scoreBar()}
+  <div class="game-card">
+    <div class="game-word">${item.w}</div>
+    <div class="game-hint">Kaç hece sayıyorsun?</div>
+    <div class="options-grid" id="opts">
+      ${opts.map(n=>`<button class="opt-btn" onclick="checkHeceSat(this,${n},${correct})">${n} hece</button>`).join('')}
+    </div>
+    <div id="fb"></div>
+  </div>`;
+}
+
+window.checkHeceSat=function(btn,chosen,correct){
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  const ok=chosen===correct;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok) document.querySelectorAll('.opt-btn').forEach(b=>{if(b.textContent===correct+' hece')b.classList.add('correct');});
+  gameScore.total++;if(ok)gameScore.correct++;
+  document.getElementById('fb').innerHTML=`
+  <div class="feedback ${ok?'ok':'no'}">${ok?'✅ Doğru! '+correct+' hece!':'❌ Yanlış! Doğrusu '+correct+' hece.'}</div>
+  <button class="next-btn" onclick="nextHeceSat()">Devam Et →</button>`;
+};
+
+function scoreBar(){
+  return `<div class="score-bar">
+    <div class="score-item"><div class="score-num" style="color:var(--t400)">${gameScore.correct}</div><div class="score-lbl">Doğru</div></div>
+    <div class="score-item"><div class="score-num">${gameScore.total}</div><div class="score-lbl">Toplam</div></div>
+    <div class="score-item"><div class="score-num" style="color:var(--p400)">${gameScore.total?Math.round(gameScore.correct/gameScore.total*100):0}%</div><div class="score-lbl">Başarı</div></div>
+    <div class="score-item" style="margin-left:8px"><button onclick="showGameSelect()" style="background:none;border:1.5px solid var(--g100);border-radius:var(--rsm);padding:4px 10px;font-family:var(--fn);font-size:12px;color:var(--g600);cursor:pointer">← Oyunlar</button></div>
+  </div>`;
+}
+
+function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5);}
+
+// ===== BAŞLAT =====
+showWelcome();
+</script>
+</body>
+</html>

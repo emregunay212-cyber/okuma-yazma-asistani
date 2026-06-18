@@ -1,0 +1,9 @@
+# Gizli anahtar canlı siteye GİTMESİN (proxy kullanılıyor)
+config.js
+
+# Yalnızca yerelde gereken araçlar/dosyalar
+server.py
+gen_faq.py
+sorular.jsonl
+sorular-islendi.jsonl
+logs/
