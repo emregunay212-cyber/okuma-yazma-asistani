@@ -1,0 +1,1714 @@
+{
+  "sorular": [
+    {
+      "soru": "herkez mi herkes mi",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'herkez' geçtiği için doğru yazımın 'herkes' olduğunu söyler (her zaman düzeltir).",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "yanlız mı yalnız mı doğru",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'yanlız' geçtiği için doğrusunun 'yalnız' olduğunu söyler.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "yalnış mı yanlış mı",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'yalnış' geçtiği için doğrusunun 'yanlış' olduğunu söyler. (yalnız/yanlış karışmasına dikkat.)",
+      "zorluk": "orta",
+      "neden_tuzak": "yalnız:yanlız ve yanlış:yalnış çiftleri birbirine çok benzer; sistemin doğru çifti seçmesi gerekir.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "birşey mi bir şey mi yazılır",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'birşey' geçtiği için doğrusunun 'bir şey' (ayrı) olduğunu söyler.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "hergün mü her gün mü",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'hergün' geçtiği için doğrusunun 'her gün' (ayrı) olduğunu söyler.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "çünki mi çünkü mü doğrusu",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'çünki' geçtiği için doğrusunun 'çünkü' olduğunu söyler.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "öğretmenim sağol dedim",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Cümlede yanlış form 'sağol' geçtiği için (niyet aranmadan) doğrusunun 'sağ ol' (ayrı) olduğunu düzeltir.",
+      "zorluk": "orta",
+      "neden_tuzak": "Soru değil günlük cümle; yine de yanlış yazım her geçtiğinde düzeltilmeli.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "şuan dışarıdayım",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Cümlede yanlış form 'şuan' geçtiği için doğrusunun 'şu an' (ayrı) olduğunu düzeltir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Günlük cümle, yazım niyeti yok; ama YANLIS form 'şuan' her geçtiğinde düzeltilir, konu-dışı sanılmamalı.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "şu an toplantı var",
+      "kategori": "imla",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "DOGRU form 'şu an' ve yazım niyeti olmadığından düzeltme tetiklenmez; konuyla ilgili anahtar kelime yok, konu-dışı yönlendirme verir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Doğru form niyet olmadan günlük cümlede geçiyor; 'şu an' düzeltilmemeli, model/deterministik tetiklenmemeli.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "şu an ne yapıyorsun",
+      "kategori": "imla",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Doğru form 'şu an', yazım niyeti yok, konu anahtarı yok; konu-dışı yönlendirme verir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Doğru imla formu sohbet sorusu içinde; imla düzeltmesi tetiklenmemeli.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "film nasıl çekilir",
+      "kategori": "imla",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "'film' bir imla çiftinin doğru formu olsa da yazım niyeti yok ('çekilir' konu anahtarı değil); konu-dışı yönlendirme verir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Doğru form 'film' geçiyor ama niyet sınırı: 'nasıl çekilir' yazım düzeltmesini TETIKLEMEMELI.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "makine nasıl çalışır",
+      "kategori": "imla",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "'makine' doğru form olsa da yazım niyeti yok; konu-dışı yönlendirme verir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Doğru form + niyetsiz genel 'nasıl çalışır' sorusu imla düzeltmesini tetiklememeli.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "makine mi makina mı yazılır",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'makina' geçtiği için doğrusunun 'makine' olduğunu söyler.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "bilgisayar programı açılmıyor",
+      "kategori": "imla",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Doğru form 'program' geçiyor ama yazım niyeti ve konu anahtarı yok; konu-dışı yönlendirme verir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Doğru imla formu günlük cümlede; 'bilgisayar' konu anahtarı değil, imla düzeltmesi tetiklenmemeli.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "proğram mı program mı doğru",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'proğram' geçtiği için doğrusunun 'program' olduğunu söyler.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "Ali de geldi",
+      "kategori": "imla",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Bağlaç 'de' günlük cümlede; yazım/kural niyeti yok, konu anahtarı yok; konu-dışı yönlendirme verir (de/da düzeltmesi tetiklenmez).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "de/da yalnızca yazım/kural niyetiyle eşleşir; günlük cümlede TETIKLENMEMELI.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "geldim ki kimse yok",
+      "kategori": "imla",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "'ki' günlük cümlede; yazım niyeti ve konu anahtarı yok, konu-dışı yönlendirme verir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "ki bağlacı yalnızca yazım/kural niyetiyle eşleşir; düz cümlede tetiklenmemeli.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "de da nasıl yazılır",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "de/da kuralını verir: bağlaç 'de/da' ayrı, hâl eki -de/-da bitişik yazılır.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "ev de mi evde mi yazılır",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "de/da kuralını verir; 'yaz' niyeti ve 'de' hedef kelimesi olduğu için deterministik açıklama döner.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "hiç bir şey anlamadım",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'hiç bir' geçtiği için doğrusunun 'hiçbir' (bitişik) olduğunu düzeltir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Günlük cümle gibi görünse de yanlış form 'hiç bir' her geçtiğinde düzeltilir.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "birkaç ayrı mı yazılır",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "'birkaç' doğru formu + 'ayrı' yazım niyeti olduğu için doğrusunun 'birkaç' (bitişik) olduğunu, 'bir kaç'ın yanlış olduğunu söyler.",
+      "zorluk": "orta",
+      "neden_tuzak": "Doğru form ama 'ayrı' niyet kelimesi var; bu yüzden deterministik tetiklenir (niyetsiz olsaydı konu-dışı olurdu).",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "herzaman geç kalıyor",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'herzaman' geçtiği için doğrusunun 'her zaman' (ayrı) olduğunu düzeltir.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "her zaman geç kalıyor",
+      "kategori": "imla",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "DOGRU form 'her zaman' + yazım niyeti yok + konu anahtarı yok; konu-dışı yönlendirme verir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Bir önceki sorunun doğru-form ikizi: doğru yazıldığında niyet yoksa düzeltme tetiklenmemeli.",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "hoşgeldin dedim ona",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'hoşgeldin' geçtiği için doğrusunun 'hoş geldin' (ayrı) olduğunu düzeltir.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "orjinal mı orijinal mi",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'orjinal' geçtiği için doğrusunun 'orijinal' olduğunu söyler.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "yada nasıl yazılır",
+      "kategori": "imla",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yanlış form 'yada' geçtiği için doğrusunun 'ya da' (ayrı) olduğunu söyler.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "imla"
+    },
+    {
+      "soru": "nokta nereye konur",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Nokta (.) cümlenin sonuna konur açıklaması; örnek bir cümle ile.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "virgul nereye konur",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Virgül (,) sıralanan kelimeleri ayırır açıklaması; örnek cümle ile.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Eksik Türkçe karakter (virgul). fold() ile 'virgül'→'virgul' eşleşmeli; aksan-duyarsızlık testi.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "soru isareti ne zaman kullanilir",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Soru işareti (?) soru cümlesinin sonuna konur açıklaması; örnek ile.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Aksan-duyarsız: 'soru isareti' foldlanmadan da '/soru isaret/' regexine ve FAQ 'soru isaret' anahtarına uymalı.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "ünlem işareti nerede kullanılır",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Ünlem (!) sevinç, heyecan, seslenme bildirir açıklaması; örnek ile.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "noktalama işaretleri nelerdir",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Noktalama işaretleri listesi: nokta, virgül, soru işareti, ünlem, iki nokta, kesme.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Metinde 'nokta' alt dizesi de var ama '!noktalama' guard'ı sayesinde tek 'Nokta' cevabı yerine TÜM liste dönmeli; nokta/noktalama ayrımı sırası kritik.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "noktalama nedir",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Noktalama işaretlerinin ne olduğu / listesi; tek başına Nokta cevabı DEĞİL.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'noktalama' içinde 'nokta' geçer; kod önce '/nokta/&&!/noktalama/' kontrol eder, bu yüzden yanlışlıkla 'Nokta cümle sonuna konur' dönmemeli.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "iki nokta ne zaman konur",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İki nokta (:) açıklama/örnek sıralanacağında konur açıklaması; örnek ile.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'iki nokta' içinde 'nokta' var; FAQ 'iki nokta' anahtarı inline '/nokta/' regexinden ÖNCE çalışıp doğru 'İki nokta' cevabını vermeli, sade Nokta cevabı değil.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "iki nokta üst üste neye yarar",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İki nokta (:) açıklama veya sıralama öncesi konur açıklaması.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Yine 'iki nokta'+'nokta' çakışması; FAQ 'iki nokta' anahtarı yakalamazsa sade Nokta cevabına düşme riski (üst üste eki ifadeyi uzatır).",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "kesme işareti nereye konur",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Kesme işareti (') özel isimlere gelen ekleri ayırır açıklaması; örnek (Ankara'da) ile.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "kesme isareti ne ise yarar",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Kesme işareti (') özel isim eklerini ayırır açıklaması.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Aksan-duyarsız ('kesme isareti'); ayrıca 'kesme' inline regexte yok, yalnızca FAQ 'kesme' anahtarına dayanır, eşleşme oraya bağımlı.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "ali'nin kalemi cümlesinde kesme işareti neden var",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Kesme işareti açıklaması: özel isme gelen ekleri ayırır; FAQ 'kesme' anahtarı eşleşir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Cümlede gerçek kesme işareti (') var; localAnswer onu siliyor (Ali'nin→alinin) ama 'kesme' kelimesi metinde geçtiği için yine de doğru kesme cevabı dönmeli.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "noktalı virgül nedir",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Noktalı virgül (;) açıklaması: virgülle ayrılmış grupları veya anlamca bağlı cümleleri ayırır.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İçinde hem 'nokta' hem 'virgul' geçer; FAQ 'noktali virgul' anahtarı önce çalışıp özel cevabı vermeli, sade Virgül/Nokta cevabına düşmemeli.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "cümlenin sonuna hangi işaret konur",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Cümle sonuna anlamına göre nokta, soru işareti veya ünlem konur açıklaması.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "öğretmenim bugün hava güzel cümlesinin sonuna ne koymalıyım",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Cümle sonu işareti açıklaması (nokta/soru/ünlem); FAQ 'cümle sonu' anany anahtarı eşleşir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'nokta/virgül' gibi anahtar kelime yok; FAQ kany 'sonuna hangi/sona hangi' veya 'cümle sonu' eşleşmesine bağlı, eşleşmezse konu-dışına/modele kayabilir.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "Ali de geldi cümlesinde virgül var mı",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Virgül (,) sıralanan kelimeleri ayırır genel açıklaması döner (cümleye özel analiz yapmaz).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'virgül' kelimesi geçtiği için inline '/virgul/' tetiklenir ve genel virgül kuralı döner; modelden cümleye özel cevap beklenmez, deterministik genel cevap gelir.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "nokta ile virgül arasındaki fark ne",
+      "kategori": "noktalama",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hangi cevabın döndüğü kod sırasına bağlı: 'nokta'+değil-'noktalama' önce eşleştiği için Nokta (.) cümle sonu açıklaması döner.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İki kavram sorulsa da kod tek cevap verir; '/nokta/&&!/noktalama/' ilk eşleştiği için yalnız Nokta cevabı döner, kıyas/fark beklentisi karşılanmaz.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "tırnak işareti nasıl kullanılır",
+      "kategori": "noktalama",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Deterministik eşleşme yok; 'tırnak/işaret' TOPIC_WORDS'te yok, 'nokta/virgül' gibi anahtar da yok → konu-dışı yönlendirme mesajı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Çocuk gerçek bir noktalama işareti (tırnak) sorar ama ne FAQ'ta ne inline regexte ne TOPIC_WORDS'te yer alır; 'isaret' tek başına anahtar değil → yanlışlıkla konu-dışı sayılır.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "parantez ne işe yarar",
+      "kategori": "noktalama",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Deterministik eşleşme yok; 'parantez' TOPIC_WORDS'te ve FAQ'ta yok → konu-dışı yönlendirme mesajı döner.",
+      "zorluk": "orta",
+      "neden_tuzak": "Geçerli bir noktalama sorusu olmasına rağmen konu anahtarı içermediği için sistem modele bile göndermeden konu-dışı yönlendirir; kapsam boşluğunu gösterir.",
+      "_ajan": "noktalama"
+    },
+    {
+      "soru": "hece nedir?",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hece kavramının tanımını verir: ağızdan bir defada çıkan ses öbeği, her hecede bir sesli harf bulunduğu, örnekle (e-vi-miz).",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "kelime nedir",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Kelime (sözcük) tanımı: anlamı olan ses/harf topluluğu; ev, okul, kalem gibi örnekler.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "harf nedir?",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Harf tanımı: sesleri gösteren işaretler; alfabede 29 harf, 8 ünlü 21 ünsüz bilgisi.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "cümle nedir",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Cümle tanımı: bir duygu/düşünceyi tam anlatan kelime dizisi; büyük harfle başlar, noktalama ile biter.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "özel isim nedir hocam",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Özel isim tanımı: tek bir varlığa verilen ad (Ali, Bursa, Türkiye, Tekir); büyük harfle başladığı. ('hocam' eklenmesi eşleşmeyi bozmaz.)",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "i ile ı farkı nedir",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Noktalı i ile noktasız ı'nın ayrı harfler olduğu; küçük i/ı, büyük İ/I; ip-ışık örneği.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "hece nasıl bölünür?",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hece bölme kuralı: her hecede bir sesli; iki sesli arası tek sessiz sonraki heceye (a-ra-ba), iki sessiz bölünür (el-ma).",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "nasıl daha iyi okurum",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Okuma tavsiyeleri: her gün biraz oku, kelimeleri bütün gör, noktada kısa dur, anlayarak oku.",
+      "zorluk": "kolay",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "de da nasıl yazılır?",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Bağlaç de/da ayrı yazılır (Ali de geldi), hâl eki -de/-da bitişik (okulda) kuralı. Yazım niyeti ('yazılır') olduğu için deterministik tetiklenir.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "ki bağlacı ayrı mı yazılır",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Bağlaç ki ayrı yazılır (Duydum ki gelmişsin) kuralı. 'ki' tam kelime + 'ayrı/yazılır' niyetiyle eşleşir.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "mi soru eki nasıl yazılır",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Soru eki mı/mi/mu/mü'nün her zaman ayrı yazıldığı (Geldin mi?) kuralı.",
+      "zorluk": "orta",
+      "neden_tuzak": "",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "hece ne demek",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Hece kavramını çocuğa uygun, kısa ve doğru biçimde açıklamalı. Konu içi olduğu için modele gider.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'hece nedir' bankada k:['hece nedir'] ile sabittir; 'ne demek' varyantı YOKTUR (kelime/harf'te var ama hece'de yok). Bu yüzden deterministik yerine modele düşer; kavramsal eşleşmenin ifade kırılganlığını hedefler.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "cümle ne demek?",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Cümle kavramını kısa ve doğru açıklamalı. Konu içi olduğu için modele gider.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'cümle nedir' bankada k:['cümle nedir'] ile sabittir; 'ne demek' varyantı yoktur, dolayısıyla deterministik kaçırılıp modele düşer. hece ile aynı ifade tutarsızlığı.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "sözcük ne demek",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Kelime (sözcük) tanımını döndürür. Banka kany'sinde 'sözcük ne demek' bulunduğu için deterministik eşleşir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kelime' eş anlamlısı 'sözcük' + 'ne demek' varyantı bilerek eklenmiş; hece/cümle'nin aksine burada deterministik YAKALANIR. İki kavramın farklı davranışını ayırt etme testi.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "harf ne demek",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Harf tanımını döndürür. Banka kany'sinde 'harf ne demek' bulunduğu için deterministik eşleşir.",
+      "zorluk": "orta",
+      "neden_tuzak": "'ne demek' varyantı harf'te var (hece/cümle'de yok); aynı eki kullanan iki kavramın farklı katmana düşmesini sınar.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "sözcük nedir acaba",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Kelime (sözcük) tanımını döndürür. 'acaba' gibi ek kelime kany alt-dize eşleşmesini bozmaz.",
+      "zorluk": "orta",
+      "neden_tuzak": "Cümleye serbest kelime eklemenin alt-dize tabanlı kany eşleşmesini bozup bozmadığını sınar (bozmaz).",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "i ve ı aynı harf mi",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "i ile ı'nın ayrı harfler olduğunu konu içi biçimde açıklamalı; modele gider.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "i/ı bankası kany'si 'ile/fark/noktalı/noktasız' arar; 've aynı harf mi' bunların hiçbirini içermez. 'harf' geçtiği için konu içi sayılıp modele düşer, deterministik kaçar.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "Ali de geldi",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Okuma-yazma asistanı yönlendirme mesajı verilmeli (de/da'yı günlük cümlede kullanmak kural sorusu değildir).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "' de ' tam kelime olarak geçer ama YAZIM niyeti (yaz/ayrı/bitişik/nasıl/kural) yoktur; ayrıca hiçbir TOPIC anahtarı içermez → konu dışı. de/da'nın yazım niyeti olmadan tetiklenmemesini test eder.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "sen de gel hadi",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Konu dışı yönlendirme mesajı verilmeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Günlük konuşmada 'de' bağlacı; yazım niyeti ve TOPIC kelimesi yok. de/da'nın deterministik tetiklenmemesi gerektiğini doğrular.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "duydum ki gelmişsin",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Konu dışı yönlendirme mesajı verilmeli (ki günlük cümlede, kural sorusu değil).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'ki' tam kelime geçer ama yazım/bağlaç niyeti (yaz/ayrı/nasıl/bağlaç) ve TOPIC kelimesi yoktur → konu dışı. ki'nin günlük cümlede tetiklenmemesini sınar.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "geldin mi",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Konu dışı yönlendirme mesajı verilmeli (mi soru eki günlük kullanımda).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'mi' tam kelime geçer ama yazım/soru-eki niyeti (yaz/ayrı/soru/ek) ve TOPIC kelimesi yoktur → konu dışı. mi'nin günlük cümlede tetiklenmemesi.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "mı eki nereye gelir",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Konu dışı yönlendirme mesajı verilmeli (beklenmedik biçimde deterministik yakalanmaz).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Hedef kelime eşleşmesi (w:'mi') Türkçe-korumalı normT üzerinde yapılır: yazılan 'mı' ≠ 'mi', eşleşmez. 'ek' niyeti var ama w eşleşmediği için banka devre dışı; ayrıca TOPIC kelimesi yok → konu dışı. Aksan-duyarlı w eşleşmesinin tek-kelimedeki kırılganlığını hedefler.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "heceyi nasıl ayırırım",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hece bölme kuralını döndürür; 'hece' + 'nasıl/ayır' niyetiyle eşleşir.",
+      "zorluk": "orta",
+      "neden_tuzak": "'hece nedir' eşleşmesinden farklı olarak bu, 'hece nasıl bölünür' bankasına k:['hece']+kany:['ayır','nasıl'] ile düşer. Aynı kök farklı ifadenin doğru bankaya gitmesini sınar.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "büyük ve küçük harf farkı nedir",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Büyük/küçük harf açıklaması: cümle büyük harfle başlar, özel isimler büyük yazılır, gerisi küçük.",
+      "zorluk": "orta",
+      "neden_tuzak": "'harf' (k) + 'büyük ve küçük' (kany) eşleşir. 'fark/nedir' eklenmesi engellemez; banka çok-kelimeli kany alt-dizesinin tutmasını sınar.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "daha hızlı nasıl okurum",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Okuma geliştirme tavsiyelerini döndürür; 'oku' (k) + 'hızlı/nasıl' (kany) eşleşir.",
+      "zorluk": "orta",
+      "neden_tuzak": "'nasıl daha iyi okurum' bankasının kany'sinde 'hızlı' ve 'nasıl' bulunduğundan farklı ifadeyle de yakalanır. İfade çeşitliliğine dayanıklılığı test eder.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "de ayrı mı bitişik mi yazılır",
+      "kategori": "FAQ-kural",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Bağlaç de/da ayrı, hâl eki -de/-da bitişik kuralını döndürür. ' de ' tam kelime + 'ayrı/bitişik/yazılır' yazım niyetiyle deterministik tetiklenir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Günlük 'Ali de geldi' ile karşıtlık: burada açık yazım niyeti (ayrı/bitişik/yazılır) olduğu için AYNI 'de' kelimesi deterministik yakalanır. Niyet kapısının ayırt ediciliğini doğrular.",
+      "_ajan": "faq-kural"
+    },
+    {
+      "soru": "kitap mı kalem mi daha uzun",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "İki kelimeyi karşılaştırıp hangisinin daha çok harfli/heceli olduğunu doğru kelimeler üzerinden açıklamalı; yalnızca tek kelimeye odaklanıp diğerini görmezden gelmemeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Cümlede iki hedef kelime (kitap, kalem) var ama hiçbir deterministik tetikleyici (kaç harf/hecele) yok. Sistem ya konu-dışına düşer ya da yanlış bir eşleşmeyle tek kelimeyi işler; doğru olan iki kelimeyi de hesaba katan modele gitmesi.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "ev ile okul hangisi çok harfli",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Her iki kelimenin harf sayısını kıyaslayıp doğru olanı söylemeli; tek bir kelimeyi seçip onun harf sayısını vererek soruyu yanlış cevaplamamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kac harf' regexi 'harf'ten hemen önceki kelimeyi alır; burada 'çok' kelimesi 'harfli'den önce, asıl kelimeler (ev, okul) regex penceresinin dışında. Yanlışlıkla 'çok' yakalanabilir veya hiç eşleşmeyip karşılaştırma yapılmaz.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "elma armut hangisi daha çok heceli",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "İki kelimenin hece sayısını karşılaştırıp doğru olanı belirtmeli; sadece bir kelimeyi heceleyip karşılaştırmayı atlamamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kac hece' tetikleyicisi yok, sadece 'heceli' geçiyor ve regex 'heceli'den önceki 'çok' kelimesini görür (kany 'heceli' ile FAQ deneyebilir ama hedef 'çok' WSTOP değil). İki kelimeden hangisinin yakalanacağı belirsiz; doğru davranış karşılaştırma için modele gitmek.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "top ve masa hangisinin harfi fazla",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "top ve masa kelimelerinin harf sayılarını kıyaslayıp doğru sonucu vermeli; tek kelimeyi işleyip diğerini yok saymamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İki banka kelimesi (top, masa) var ama 'harfi fazla' ifadesi 'kac harf' regexine uymuyor. Sistem ya yanlış kelimeyi işler ya karşılaştırmayı yapamaz; doğru olan iki kelimeyi de hesaba katması.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "köpek mi kedi mi kaç harfli",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Soru iki kelimeyi karşılaştırma niyetinde; her iki kelimenin harf sayısını ayrı ayrı doğru vermeli, sadece tek (sona yakın) kelimeyi cevaplamamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kac harf' regexi 'kaç harf'tan hemen önceki kelimeyi (kedi) yakalar ve yalnızca kedi için cevap üretir; kullanıcının asıl istediği iki kelimenin kıyaslaması göz ardı edilir.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "kalem kitaptan kaç harf uzun",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "İki kelimenin harf sayısı farkını hesaplayıp doğru farkı söylemeli; tek kelimenin harf sayısını verip soruyu yanlış yorumlamamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kac harf' regexinden önce 'kitaptan' (kitap değil, ekli hâl) gelir; regex 'kitaptan' kelimesini yakalayıp yalnızca onun harf sayısını verebilir, oysa istenen iki kelime arasındaki fark.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "annemin adını hecele",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "İsmin verilmediğini nazikçe belirtip kullanıcıdan ismi yazmasını istemeli; var olmayan/yanlış bir kelimeyi hecelememeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'hecele' regexi 'hecele'den önceki 'adını' kelimesini yakalar ve 'a-dı-nı' diye heceler; oysa kullanıcı somut bir isim vermemiş, doğru davranış kelimeyi sormak.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "benim adım kaç harf",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Hangi ismin sorulduğu belli olmadığından kullanıcıdan ismini yazmasını istemeli; 'adım' kelimesini sayıp sahte cevap vermemeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kac harf' regexi 'kaç harf'tan önceki 'adım' kelimesini yakalayıp onun harf sayısını verir; kullanıcının gerçek adı bilinmediği için bu yanlış. Doğru olan ismi sormak için modele gitmek.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "bir kelimede kaç harf olur",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Genel bir bilgi sorusu olarak ele alınmalı; kelimelerin farklı harf sayıları olabileceğini açıklamalı, tekil bir kelimeymiş gibi sayı vermemeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'bir' ve 'kelimede' WSTOP listesinde; 'kac harf' regexi her ikisini de hedef kabul edemez → eşleşme null döner ve doğru şekilde modele gider. Tuzak, 'bir'i hedef sanıp '3 harf' demesi.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "kelime kaç hecelidir",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Belirli bir kelime verilmediği için hangi kelimenin sorulduğunu istemeli ya da hece kavramını genel açıklamalı; 'kelime' sözcüğünü hecelememeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kelime' WSTOP listesinde olduğundan hece regexi onu hedef alamaz ve null döner; doğru davranış modele/genel açıklamaya gitmek. Tuzak, 'kelime'yi ke-li-me diye sayması.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "bir kelime kaç hece içerir",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Kelimelere göre hece sayısının değiştiğini açıklamalı veya somut kelime istemeli; 'bir' veya 'kelime' sözcüğünü hecelemeye kalkmamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'bir' ve 'kelime' WSTOP; hece regexi hedef bulamaz ve modele düşer. Tuzak, stop-word'lerden birini yanlışlıkla hedef kelime sanması.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "masanın mı sandalyenin mi harfi çok",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "İki kelimenin (masa, sandalye) harf sayısını karşılaştırıp doğru olanı söylemeli; ekli hâlleri ya da tek kelimeyi işleyip yanlış cevap vermemeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Kelimeler iyelik ekli ('masanın','sandalyenin') ve 'harfi çok' ifadesi 'kac harf' regexine uymuyor; sistem ya yanlış kelimeyi yakalar ya karşılaştırma yapamaz.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "hecele bakalım okul kelimesini",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "okul kelimesini doğru hecelere bölüp göstermeli (o-kul); araya giren 'bakalım' kelimesini hecelememeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İleri yönlü regex 'hecele su/bana X' kalıbını bekler; 'hecele bakalım okul' içinde 'bakalım' araya girince 'hecele\\s+(bana|su)?([a-z]+)' 'bakalım'ı yakalayabilir, asıl kelime 'okul' kaçabilir.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "defter mi silgi mi daha çok harfli acaba",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "defter ve silgi kelimelerinin harf sayısını kıyaslayıp doğru olanı belirtmeli; tek kelimeyi seçip diğerini atlamamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İki kelime arasında karşılaştırma var; 'harfli' öncesi 'çok' kelimesi regex penceresinde, asıl kelimeler (defter, silgi) trigger'a komşu değil → yanlış kelime yakalanabilir.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "şu cümlede kaç harf var: Ali okula gitti",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Tek kelime değil bir cümle sorulduğundan, cümleyi/kelime sayısını uygun şekilde ele almalı; 'cümlede' sözcüğünü tek kelime sanıp harfini saymamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'cumle/cumlede' WSTOP listesinde ve regex hedef alamaz; ayrıca 'kaç harf' öncesi kelime 'cümlede'. Sistem null dönüp modele gitmeli, yanlışlıkla 'cümlede' kelimesini saymamalı.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "araba kelimesi mi otobüs kelimesi mi uzun",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "araba ve otobüs kelimelerini karşılaştırıp hangisinin daha uzun olduğunu doğru söylemeli; tek kelimeye indirgememeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kelimesi' tekrarları ve 'uzun' kelimesi var; deterministik tetikleyici yok, iki hedef kelime var. Sistem karşılaştırmayı modele bırakmalı, yanlışlıkla tek kelimeyi işlememeli.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "kuş kelimesinden önce kalem kelimesini hecele",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "kullanıcının asıl istediği kalem kelimesini doğru hecelere bölmeli (ka-lem); cümledeki diğer kelime 'kuş'u veya 'kelimesini'yi hecelememeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Cümlede iki kelime (kuş, kalem) ve 'hecele' var; regex 'hecele'den önceki 'kelimesini'yi (skip'te) atlayıp 'kalem'i bulması beklenir ama 'kuş' erken yakalanma riski taşır; yanlış kelimenin hecelenmemesi gerekir.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "deniz mi orman mı kaç heceli",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Her iki kelimenin hece sayısını ayrı ayrı doğru verip karşılaştırmalı; yalnızca 'kaç heceli'ye komşu tek kelimeyi cevaplamamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kac hece' regexi 'kaç heceli'den hemen önceki 'orman' kelimesini yakalayıp sadece onu cevaplar; kullanıcının istediği iki kelimenin kıyaslaması göz ardı edilir.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "hangisi daha kısa kapı yoksa pencere",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "kapı ve pencere kelimelerinin uzunluğunu kıyaslayıp doğru olanı belirtmeli; deterministik bir tek-kelime cevabı üretmemeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İki hedef kelime var ama hiçbir 'kaç harf/hece/hecele' tetikleyicisi yok; sistemin karşılaştırma için modele gitmesi gerekir, tek kelimeyi yanlış işlememeli.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "kitabın mı kalemin mi son harfi farklı",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "İki kelimenin son harflerini ayrı ayrı doğru söyleyip karşılaştırmalı; sadece 'son harf'e komşu tek kelimeyi (kalem) işlememeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'son harf' regexi 'son harf'ten önceki 'kalemin' kelimesini yakalar ve tek kelimenin son harfini verir; ayrıca kelimeler ekli ('kitabın','kalemin'), kıyas niyeti kaçar.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "okul kelimesi kaç harf kitap kelimesi kaç harf",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "İki ayrı kelimenin (okul ve kitap) harf sayılarını ikisini de doğru verip belirtmeli; yalnızca ilk eşleşen kelimeyi cevaplayıp ikinciyi atlamamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İki ayrı 'kaç harf' sorusu tek mesajda; regex soldan ilk eşleşmeyi (okul) alıp tek cevap döner, ikinci kelime (kitap) işlenmez. Doğru davranış ikisini de kapsamak.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "şemsiye mi şapka mı çok harf içeriyor",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "şemsiye ve şapka kelimelerinin harf sayılarını kıyaslayıp doğru olanı söylemeli; tek kelimeye odaklanmamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'harf içeriyor' ifadesi 'kac harf' regexine uymaz; 'çok' kelimesi harf'ten önce. İki hedef kelime (şemsiye, şapka) regex penceresi dışında kalır, yanlış kelime yakalanabilir.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "adının ilk harfi ne benim",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Hangi ad olduğu belirtilmediğinden kullanıcıdan ismini istemeli; 'adının' kelimesinin ilk harfini verip yanıltıcı cevap üretmemeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'ilk harf' regexi 'ilk harf'ten önceki 'adının' kelimesini yakalayıp 'A' der; kullanıcının asıl adı bilinmediğinden bu yanlış. Doğru davranış ismi sormak.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "bana bir kelime hecele",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Hangi kelimenin hecelenmesi istendiği belli olmadığından kullanıcıdan bir kelime istemeli ya da örnek heceleme önermeli; 'bir' veya 'kelime'yi hecelememeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'hecele' öncesi 'kelime' skip listesinde, 'bir' de WSTOP/skip kapsamında; geçerli hedef kalmaz, eşleşme null döner ve modele gider. Tuzak, 'bir'i veya 'kelime'yi hecelemeye çalışması.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "limon portakaldan kaç hece fazla",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "limon ve portakal kelimelerinin hece sayısı farkını doğru hesaplayıp söylemeli; tek kelimenin hecesini verip soruyu yanlış yorumlamamalı.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kac hece' regexinden önce 'portakaldan' (ekli) gelir; regex onu yakalayıp tek kelimenin hece sayısını verebilir, oysa istenen iki kelime arasındaki fark.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "sınıf mı sınav mı yazması zor, hangisi çok harfli",
+      "kategori": "heceleme/harf-sayımı",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "sınıf ve sınav kelimelerinin harf sayılarını kıyaslayıp doğru olanı belirtmeli; 'çok harfli'ye komşu kelimeyi tek başına işleyip yanlış cevap vermemeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Cümlede iki benzer kelime (sınıf, sınav) ve araya giren 'yazması zor' var; 'harfli' öncesi 'çok' kelimesi regex penceresinde, asıl kelimeler komşu değil, yanlış yakalama riski yüksek.",
+      "_ajan": "yanlis-kelime"
+    },
+    {
+      "soru": "büyük harf ne zaman kullanılır?",
+      "kategori": "büyük harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Büyük harfin iki kullanım yerini açıklamalı: cümle başı ve özel isimler (örneklerle). localAnswer'daki /buyuk harf/ kuralı (ya da FAQ 'büyük harf ne zaman kullanılır') yakalar.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Düz, kalıba birebir uyan soru; tuzak yok.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "Buyuk harf ne zaman yazilir",
+      "kategori": "büyük harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yine büyük harf kuralı dönmeli. fold() ile 'buyuk harf' eşleşir; Türkçe karaktersiz yazım yakalanmalı.",
+      "zorluk": "orta",
+      "neden_tuzak": "Aksan-duyarsız: 'büyük'→'buyuk', 'yazılır'→'yazilir'. fold() sayesinde /buyuk harf/ hâlâ tutar; eksik Türkçe karakter testi.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "büyük ve küçük harf arasındaki fark nedir",
+      "kategori": "büyük harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Büyük/küçük harf farkını anlatan banka cevabı dönmeli (FAQ 'büyük ve küçük harf nedir'; k:['harf'] + kany 'büyük küçük' eşleşir).",
+      "zorluk": "orta",
+      "neden_tuzak": "'büyük harf' tek parça geçmiyor; faqLookup'taki kany 'büyük ve küçük'/'küçük büyük' alt-dizesiyle yakalanır, /buyuk harf/ kuralına gelmeden banka devreye girer.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "küçük harf ne demek",
+      "kategori": "büyük harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "FAQ 'büyük ve küçük harf' cevabı dönmeli (k:['harf'] + kany 'küçük harf' foldlu 'kucuk harf' eşleşir).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İçinde 'büyük harf' YOK, sadece 'küçük harf' var. /buyuk harf/ kuralı tutmaz; ama faqLookup kany'deki 'küçük harf' alt-dizesi yakalar → yine deterministik kalır, modele kaymaz.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "büyükharf ne zaman kullanılır?",
+      "kategori": "büyük harf",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Konuyla ilgili olduğu için modele gider; modelin büyük harf kuralını anlatması beklenir. (Deterministik kural KAÇIRIR.)",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Bitişik 'büyükharf' → fold 'buyukharf'. /buyuk harf/ ve FAQ 'büyük harf' anahtarı BOŞLUK ister, eşleşmez. 'harf' içerdiği için onTopic true → konu-dışı değil, MODEL'e düşer.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "özel isimler neden büyük harfle başlar",
+      "kategori": "büyük harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İçinde 'büyük harf' geçtiği için /buyuk harf/ kuralı büyük harf kullanım cevabını döndürmeli (özel isim + cümle başı).",
+      "zorluk": "orta",
+      "neden_tuzak": "'özel isim' FAQ'sine de benzer ama önce faqLookup denenir; 'özel isim' k:['özel isim'] eşleşir VE büyük harf kuralı da var — her hâlükârda deterministik, beklenen davranış model dışı kalmak.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "a harfi büyük mü küçük mü",
+      "kategori": "büyük harf",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Konuyla ilgili (harf) olduğu için modele gider. Deterministik tek-harf kuralı yalnızca sesli/sessiz sorar; büyük/küçük sorusunu kapsamaz.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Tek-harf regex'i sadece (sesli|unlu|sessiz|unsuz) m[iu] kalıbını yakalar; 'büyük mü' yakalanmaz. Metin 'buyuk' içerse de 'buyuk harf' (boşlukla) içermez. 'harf' → onTopic → MODEL.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "cümlenin ilk harfi neden büyük yazılıyor",
+      "kategori": "büyük harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İçinde 'büyük' + 'harf' birlikte 'büyük ... harf' olarak değil; ama 'buyuk' ve 'harf' arasında 'yaziliyor' yok. Dikkat: cümlede 'buyuk harf' bitişik geçmiyor — bkz neden. Beklenen: MODEL.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TUZAK: 'ilk harfi neden büyük' sırasında 'harf' ile 'büyük' bitişik DEĞİL ('...ilk harfi neden buyuk yaziliyor'). /buyuk harf/ kuralı 'buyuk harf' bitişik ister, eşleşmez. faqLookup: 'cümle' içerir ama uygun anahtar yok. 'harf'/'cümle' → onTopic → MODEL'e gider.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "Ankarada büyük harfle mi yazılır",
+      "kategori": "büyük harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İçinde 'büyük harf' (büyük harfle) geçtiği için /buyuk harf/ kuralı büyük harf kullanım cevabını döndürmeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "'büyük harfle' → fold 'buyuk harfle', /buyuk harf/ alt-dize olarak tutar. Çocuk yazımı ek bitişik ('Ankarada'); yine deterministik kalır.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "gün ve ay isimleri büyük harfle mi başlar",
+      "kategori": "büyük harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İçinde 'büyük harf' geçtiği için /buyuk harf/ genel büyük harf kuralı dönecektir (gün/ay ayrıntısı modelden gelmez; genel kural verilir).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Beklenen ideal cevap gün/ay özel kuralıdır (FAQ 1665 'gün'/'ay' k'leri) ama o FAQ kany'siz ve 'gün ve ay' birlikte var → eşleşir. Ancak faqLookup skor sıralaması ve sonra /buyuk harf/: pratikte deterministik bir cevap döner, modele GİTMEZ — incelik: dönen cevap genel büyük harf kuralı olabilir, ay/gün nüansını kaçırabilir.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "alfabede kaç harf var?",
+      "kategori": "alfabe",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "29 harf (8 sesli, 21 sessiz) cevabı. /alfabe/ + 'kac harf' kuralı (ve FAQ 'alfabede kaç harf var') yakalar.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Kalıba birebir uyan düz soru; tuzak yok.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "alfabede kac tane harf var",
+      "kategori": "alfabe",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "29 harf cevabı dönmeli. fold ile 'kac tane' eşleşir; FAQ kany 'kaç tane'/'kaç harf' veya alfabe kuralı yakalar.",
+      "zorluk": "orta",
+      "neden_tuzak": "Aksan-duyarsız ('kaç'→'kac') ve 'kac tane' varyantı; eksik Türkçe karakter yine de yakalanmalı.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "Türk alfabesi nasıl sıralanır",
+      "kategori": "alfabe",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Alfabe sırası (a b c ç ...) cevabı; FAQ 'alfabe sırası nedir' (k:['alfabe','sıra']) yakalar.",
+      "zorluk": "orta",
+      "neden_tuzak": "'kaç harf' yok, sayım kuralı tutmaz; faqLookup'taki 'sıra' anahtarı 'sıralanır' alt-dizesiyle eşleşir → deterministik.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "alfabenin ilk harfi nedir",
+      "kategori": "alfabe",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Modele gider (A harfi cevabı modelden beklenir). Deterministik 'ilk harf' kuralı bu kelimeyi reddeder.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "wq() yakaladığı kelime 'alfabenin' → /^alfabe/ ile REDDEDİLİR (null). Başka kural tutmaz; 'alfabe'/'harf' → onTopic → MODEL. Sezgiye aykırı: alfabenin ilk harfi deterministik DEĞİL.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "kaç harf var",
+      "kategori": "alfabe",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Modele gider. Deterministik alfabe kuralı yalnızca 'alfabe' kelimesi de geçince 29 döndürür; çıplak 'kaç harf' kasıtlı olarak modele bırakılmıştır.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Yorumda açıkça belirtilmiş: çıplak 'kaç harf' (alfabe yok) modele gitsin. 'alfabe' geçmediği için 29 kuralı tutmaz, 'harf' → onTopic → MODEL.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "alfabede kac harf var",
+      "kategori": "alfabe",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "29 harf cevabı. Türkçe karaktersiz yazımda da /alfabe/ + 'kac harf' kuralı tutar.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Tamamen aksansız çocuk yazımı ('alfabede kac harf'). fold() her iki anahtarı da ASCII'ye indirdiği için deterministik kalır; doğrulama amacı: aksan-duyarsızlığın çalıştığını göstermek.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "ğ ile başlayan kelime var mı",
+      "kategori": "alfabe",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hiçbir Türkçe kelime ğ ile başlamaz cevabı; FAQ 'ğ harfi ile kelime başlar mı' (w:'ğ', kany:['başla']) yakalar.",
+      "zorluk": "orta",
+      "neden_tuzak": "faqLookup w:'ğ' TAM token ister; 'ğ' ayrı kelime olarak geçer ('ğ ile ...') ve 'başla' alt-dizesi var → deterministik.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "g ile baslayan kelime olur mu",
+      "kategori": "alfabe",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Modele gider. Kullanıcı 'ğ' yerine 'g' (ve aksansız) yazdığı için ğ-FAQ'i eşleşmez; konuyla ilgili (kelime) olduğundan model yanıtlar.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TUZAK: faqLookup w:'ğ' eşleşmesi Türkçe-korumalı normT üzerinden yapılır; 'g' ≠ 'ğ'. 'baslayan'/'olur mu' da 'başla' kany'sini foldsuz w yüzünden kurtarmaz (w şartı düşer). 'kelime' → onTopic → MODEL. Kullanıcının ğ harfini g yazması cevabı bozar.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "alfabe ne demek",
+      "kategori": "alfabe",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Modele gider. 'kaç harf/tane/say' veya 'sıra' geçmediği için ne 29 kuralı ne de FAQ alfabe maddeleri tutar; 'alfabe' → onTopic → model tanımı verir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'alfabe' geçiyor ama tek başına yetmez: alfabe kuralı 'kac harf|kac tane|harf say' ŞART koşar, FAQ maddeleri de 'sıra' ya da sayım anahtarı ister. Sadece 'ne demek' hiçbirini açmaz → MODEL.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "alfabede sesli harfler kaç tane",
+      "kategori": "alfabe",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Sesli harf listesi + 8 tane cevabı dönmeli (wantsSesli: 'sesli' + 'harf' kuralı, faqLookup'tan ÖNCE).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'alfabe' + 'kac tane' var; sezgi 'alfabede 29 harf' der. Ama localAnswer'da sesli/sessiz LİSTE kuralı (sesli+harf) alfabe sayım kuralından ÖNCE çalışır → 8 sesli harf cevabı döner, 29 değil. Sıralama tuzağı.",
+      "_ajan": "buyuk-harf-alfabe"
+    },
+    {
+      "soru": "iki kere iki kaç eder?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Matematik sorusu; deterministik boş döner, mesajda hiçbir TOPIC anahtarı yok. Asistan 'Ben okuma-yazma asistanıyım 😊 ...' yönlendirmesini vermeli, modele gitmemeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (matematik), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "hangi takım şampiyon oldu?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Spor sorusu; TOPIC anahtarı içermez, konu-dışı yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (spor), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "yarın yağmur yağacak mı?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Hava durumu sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (hava durumu), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "penguenler nerede yaşar?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Hayvan bilgisi sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (hayvan bilgisi), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "dünyanın en uzun nehri hangisi?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Coğrafya sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (coğrafya), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "saklambaç nasıl oynanır?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Oyun sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (oyun), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "makarna nasıl pişirilir",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Yemek sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (yemek), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "ankara mı izmir mi daha büyük?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Coğrafya sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (coğrafya), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "arılar balı nasıl yapar?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Bilim/hayvan sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (hayvan bilgisi), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "dünya neden döner?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Bilim sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (bilim), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "kediler neden mırlar",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Hayvan bilgisi sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (hayvan bilgisi), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "çıkarma işlemi çok zor geliyor, anlatır mısın?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Matematik sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli. 'çıkarma' içinde TOPIC alt-dizesi yoktur.",
+      "zorluk": "orta",
+      "neden_tuzak": "'çıkarma/işlem' okuma-yazma gibi okul terimi çağrıştırır ama hiçbir TOPIC anahtarı içermez; yine de konu dışı.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "uzayda neden yer çekimi yok?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Bilim sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (bilim), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "deniz neden tuzludur?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Bilim sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (bilim), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "yüzme öğrenmek istiyorum",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Spor/etkinlik isteği; 'öğrenmek' içinde TOPIC alt-dizesi yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "'öğrenmek' okuma-yazma öğrenimini çağrıştırır ama TOPIC anahtarı içermez; konu dışı.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "timsah mı köpekbalığı mı daha güçlü?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Hayvan bilgisi sorusu; TOPIC anahtarı yok, yönlendirme mesajı verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Net konu dışı (hayvan bilgisi), tuzak değil.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "futbol topu kaç parçadan oluşur?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Spor sorusu; 'kaç' var ama hedef bir kelime + hece/harf kalıbı yok, deterministik boş döner; TOPIC anahtarı da yok, yönlendirme mesajı verilmeli. 'oluşur' içinde 'oku' YOK.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'kaç ... oluşur' deterministik sayım kalıbına benzer ama hedef kelime yok; ayrıca hiçbir TOPIC anahtarı yok, konu dışı.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "gezegenleri sırayla sayar mısın?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Bilim/coğrafya sorusu; 'sırayla/sayar' deterministik sayım değil, TOPIC anahtarı da yok, yönlendirme mesajı verilmeli. 'sıra' içinde 'satır' YOK.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'sırayla say' sayım/sıralama kalıbını çağrıştırır ve 'sıra' kelimesi 'satır'a benzer; ama TOPIC alt-dizesi yok, konu dışı.",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "bana dokunma!",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "İçerik tamamen konu dışı; ideal davranış konu-dışı yönlendirme mesajı vermek. (Pratikte 'oku' alt-dizesi yüzünden modele kayma riski var, bu istenmeyen davranıştır.)",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'oku' (d-oku-nma).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "yazılım mühendisi ne iş yapar?",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Meslek sorusu, konu dışı; ideal davranış yönlendirme mesajı. 'yaz' sızıntısı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'yaz' (yaz-ılım).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "yeni yazıcı aldık ama çalışmıyor",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Cihaz/teknik şikayet, konu dışı; ideal davranış yönlendirme mesajı. 'yaz' sızıntısı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'yaz' (yaz-ıcı).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "abimin ses tonu çok kalın",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Günlük gözlem, konu dışı; ideal davranış yönlendirme mesajı. 'ses' burada akustik anlamda; sızıntı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'ses' (ses tonu — harf sesi değil).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "gece her yer sessizlik içindeydi",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Betimleme cümlesi, konu dışı; ideal davranış yönlendirme mesajı. 'ses' sızıntısı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'ses' (ses-sizlik).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "Metin dayım bize hediye getirdi",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Aile/günlük cümle, konu dışı; ideal davranış yönlendirme mesajı. 'metin' burada özel isim; sızıntı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'metin' (özel isim Metin, paragraf metni değil).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "basketbolda nokta atışı yaptım",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Spor cümlesi, konu dışı; ideal davranış yönlendirme mesajı. 'nokta' burada noktalama değil; sızıntı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'nokta' (nokta atışı — noktalama işareti değil).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "yarın sınavda yazıyoruz, çok heyecanlıyım",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Genel okul-günlük cümlesi, belirli bir okuma-yazma sorusu değil; ideal davranış yönlendirme mesajı. 'yaz' sızıntısı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'yaz' (yaz-ıyoruz).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "yaz gelince denize gireceğiz",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Mevsim/tatil cümlesi, konu dışı; ideal davranış yönlendirme mesajı. 'yaz' burada mevsim; sızıntı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'yaz' (mevsim 'yaz', yazmak fiili değil).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "midemde garip bir vurgu hissettim",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Sağlık/duygu cümlesi, konu dışı; ideal davranış yönlendirme mesajı. 'vurgu' burada fiziksel sancı anlamında; sızıntı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'vurgu' (hece vurgusu değil).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "babam yazıhanede çalışıyor",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Aile/meslek cümlesi, konu dışı; ideal davranış yönlendirme mesajı. 'yaz' sızıntısı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'yaz' (yaz-ıhane).",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "bu yaz çok sıcak olacak galiba",
+      "kategori": "konu-dışı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Hava/mevsim cümlesi, konu dışı; ideal davranış yönlendirme mesajı. 'yaz' burada mevsim; sızıntı modele kaymaya yol açabilir, bu istenmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "TOPIC alt-dize sızıntısı: 'yaz' (mevsim 'yaz').",
+      "_ajan": "konu-disi"
+    },
+    {
+      "soru": "a",
+      "kategori": "Sınır/aykırı girdi - tek harf",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Tek başına bir harf bir soru içermez; deterministik regexlerin hiçbiri tetiklenmez (tek harf kalıbı 'harfi/sesli/nedir' ister) ve 'a' içinde TOPIC anahtarı yok. Asistan 'Ben okuma-yazma asistanıyım...' yönlendirmesi vermeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Tek harf konuyla ilgili sanılabilir ama tek başına yazılınca ne deterministik kalıba ne de TOPIC alt-dizesine uyar; 'a' içinde harf/ses/oku/yaz gibi anahtar yok.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "o sesli mi",
+      "kategori": "Sınır/aykırı girdi - tek harf",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Tek harf sınıflandırma kalıbı tetiklenir; 'o' harfinin sesli (ünlü) olduğu söylenmeli. Model gerekmez.",
+      "zorluk": "orta",
+      "neden_tuzak": "Tek harf normalde sınırda ama burada 'harfi sesli mi' kalıbına uyduğu için deterministik yakalanır; tek harf girdisinin yine de cevaplanabildiği sınır.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "b hecele",
+      "kategori": "Sınır/aykırı girdi - tek harf heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hedef kelime tek harf olduğu için heceleme regexi ([a-z]{2,}) eşleşmez; ancak 'hece' geçtiğinden genel hece bölme kuralı açıklaması dönmeli (kelime bölmesi YAPILMADAN).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'hecele' niyeti var ama hedef 'b' tek harf; {2,} sınırına takılır. Spesifik bölme yerine genel kural fallback'i beklenir, sayı/parça uydurulmamalı.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "kütüphanecilik kaç hece",
+      "kategori": "Sınır/aykırı girdi - çok uzun kelime",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Çok uzun da olsa 'kaç hece' kalıbı tetiklenir; heceBol algoritması kelimeyi bölüp hece sayısını vermeli. Sayıyı buraya yazma, davranış: doğru hece sayısı ve bölünmüş hâl döndürülür.",
+      "zorluk": "orta",
+      "neden_tuzak": "Uzunluk üst sınırı yok; algoritmanın uzun kelimede de çalışması ve modele gitmemesi beklenir. Kütüphanecilik'teki Türkçe karakterler de foldlanarak yakalanır.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "12345",
+      "kategori": "Sınır/aykırı girdi - sadece sayı",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Sadece rakam; localAnswer hiçbir kalıba uymaz, içinde TOPIC anahtarı yoktur. Konu-dışı yönlendirme mesajı verilmeli, modele gitmemeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Rakam dizisi sayma çağrışımı yapsa da deterministik kelime regexleri harf ister; sayıda hiçbir TOPIC alt-dizesi yok, kapıdan geçemez.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "12345 kaç harf",
+      "kategori": "Sınır/aykırı girdi - sayı + sayım niyeti",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "'kaç harf' geçse de hedef token rakamdır; 'kac harf' kelime regexi [a-z] ister, rakam eşleşmez ve alfabe koşulu yoktur. localAnswer null döner; TOPIC içinde yalnızca 'harf' alt-dizesi var → aslında 'harf' geçtiği için KONU İÇİ sayılır ve modele gider.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Deterministik yakalayamaz (rakam hedef) ama mesajda 'harf' alt-dizesi geçtiği için onTopic TRUE olur ve konu-dışı yönlendirme YERİNE modele düşer; sınır davranışı kafa karıştırıcı.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "!!!???",
+      "kategori": "Sınır/aykırı girdi - sadece noktalama",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Sadece noktalama işaretleri; hiçbir deterministik kalıp ve hiçbir TOPIC anahtarı yok. Konu-dışı yönlendirme verilmeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Soru/ünlem işareti 'noktalama' konusunu çağrıştırır ama metinde 'nokta','unlem','soru isaret' KELİMELERİ geçmediği, sadece sembol olduğu için ne deterministik ne TOPIC kapısı tetiklenir.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "asdfgh",
+      "kategori": "Sınır/aykırı girdi - anlamsız harf dizisi",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Anlamsız klavye dizisi; localAnswer kalıplarına uymaz, içinde hiçbir TOPIC alt-dizesi yok. Konu-dışı yönlendirme verilmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Harflerden oluşması 'kelime/harf' işlemi sanılabilir ama tek başına bir niyet kelimesi (hecele/kaç harf vb.) içermez ve 'asdfgh' içinde harf/ses/oku/yaz gibi bir alt-dize bulunmaz.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "qwerty",
+      "kategori": "Sınır/aykırı girdi - anlamsız harf dizisi",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Anlamsız klavye dizisi, niyet kelimesi yok, TOPIC alt-dizesi yok. Konu-dışı yönlendirme verilmeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "İngilizce klavye dizisi; içinde 'yaz','oku','ses' gibi hiçbir TOPIC alt-dizesi yok (q-w-e-r-t-y), bu yüzden kapıdan geçemez ve modele gitmez.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "   elma hecele   ",
+      "kategori": "Sınır/aykırı girdi - fazladan boşluk",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Baştaki/sondaki boşluklar trim ile temizlenir; 'elma hecele' deterministik heceleme kalıbına uyar ve elma'nın hece bölünmüşü dönmeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Fazladan boşluk regex eşleşmesini bozabilir sanılır ama girdi trim'lenir ve regexler \\s+ kullanır; sınırda yine deterministik yakalanmalı.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "elma     hecele",
+      "kategori": "Sınır/aykırı girdi - kelime arası fazla boşluk",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Kelime ile niyet arasındaki çoklu boşluk \\s+ ile karşılanır; elma'nın hecelemesi deterministik dönmeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "İki kelime arasında birden çok boşluk olması eşleşmeyi bozar sanılır; regexlerdeki \\s+ çoklu boşluğu kapsadığı için sınır korunur.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "ELMA Hecele",
+      "kategori": "Sınır/aykırı girdi - büyük-küçük karışık",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "trLower ile küçültülür; deterministik heceleme tetiklenir ve ELMA bölünüp gösterilir. Kelime orijinal/normalleştirilmiş hâliyle yansıtılmalı.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Büyük harf regexleri bozar sanılır ama metin önce Türkçe-duyarlı trLower'dan geçer; büyük yazım deterministik katmanı engellemez.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "KaLeM kaç HARF",
+      "kategori": "Sınır/aykırı girdi - büyük-küçük karışık",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Karışık büyük/küçük trLower ile normalize edilir; 'kac harf' kelime sayım kalıbı tetiklenir ve kalem'in harf sayısı dönmeli. Sayıyı yazma, davranışı tarif et.",
+      "zorluk": "orta",
+      "neden_tuzak": "Karışık kapitalizasyon ve 'HARF' büyük yazımı eşleşmeyi bozar sanılır; fold+trLower sayesinde sınır korunur ve deterministik yakalanır.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "ne",
+      "kategori": "Sınır/aykırı girdi - çok kısa kelime",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "İki harfli ama bir niyet/işlem kalıbı içermez; 'ne' içinde TOPIC alt-dizesi yoktur. Konu-dışı yönlendirme verilmeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Soru kelimesi gibi durur ama tek başına; deterministik kalıplara uymaz ve 'ne' içinde harf/ses/oku/yaz vb. alt-dize bulunmaz, kapı kapalı.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "sa",
+      "kategori": "Sınır/aykırı girdi - çok kısa anlamsız",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "İki harfli anlamsız token; deterministik kalıba uymaz, içinde TOPIC anahtarı yok. Konu-dışı yönlendirme verilmeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'sa' kısa olduğu için 'ses' alt-dizesi sanılabilir ama 'ses' s-e-s'tir, 'sa' içinde geçmez; hiçbir TOPIC alt-dizesi yok, konu-dışı.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "Bugün hava cok guzel ve disarida yagmur yagiyor sanirim",
+      "kategori": "Sınır/aykırı girdi - Türkçe karaktersiz uzun cümle (konu dışı)",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Uzun, doğal ama okuma-yazma konusuyla ilgisiz cümle; hiçbir deterministik kalıba uymaz ve içinde TOPIC alt-dizesi yok. Konu-dışı yönlendirme verilmeli.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Uzun ve akıcı olması modele gitme beklentisi yaratır; ama fold edilse bile içinde harf/ses/yaz/oku/cumle gibi bir alt-dize geçmediğinden kapı kapanır. 'yagmur'/'yagiyor' 'yaz' içermez.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "bir sey yazsana bana",
+      "kategori": "Sınır/aykırı girdi - Türkçe karaktersiz, TOPIC alt-dizesi kazara içeren",
+      "beklenen_katman": "model",
+      "beklenen_cevap": "Deterministik kalıba uymaz; ancak 'yazsana' içinde 'yaz' alt-dizesi geçtiği için onTopic TRUE olur ve mesaj modele gider.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Aslında okuma-yazma sorusu değil ama 'yazsana' kelimesi 'yaz' alt-dizesini barındırdığı için konu-dışı kapısı yanlışlıkla açılır ve modele düşer (alt-dize eşleşmenin yan etkisi).",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "😀😀😀",
+      "kategori": "Sınır/aykırı girdi - sadece emoji",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Sadece emoji; trim sonrası boş değil ama hiçbir harf/kalıp/TOPIC anahtarı içermez. Konu-dışı yönlendirme verilmeli, modele gitmemeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Emoji boş girdi gibi davranır sanılabilir ama trim onu silmez; yine de localAnswer null ve onTopic false olduğundan deterministik değil konu-dışı yola gider.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "     ",
+      "kategori": "Sınır/aykırı girdi - sadece boşluk",
+      "beklenen_katman": "konu-dışı yönlendirme",
+      "beklenen_cevap": "Sadece boşluklardan oluşur; sendMessage'da trim sonrası boş kalır ve gönderim engellenir. Hiçbir katman çalışmaz, hiçbir cevap üretilmez (sessiz no-op).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Üç katmanın hiçbirine ulaşmaz; 'beklenen_katman' alanı şema gereği seçildi ama gerçek davranış girdinin trim ile düşürülüp HİÇBİR yanıt verilmemesidir. Sınır: boş gönderim erkenden return ile durdurulur.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "okyanus kaç harf",
+      "kategori": "Sınır/aykırı girdi - TOPIC anahtarına benzeyen ama içermeyen kelime",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "'okyanus kac harf' kelime sayım kalıbına uyar; okyanus'un harf sayısı deterministik dönmeli. Sayıyı yazma, davranışı tarif et.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'okyanus' içinde 'oku' yok gibi görünür (o-k-y) ama bu örnekte deterministik 'kac harf' kalıbı zaten tetiklenir; ayrıca mesajda 'harf' alt-dizesi de var. Niyet kelimesi sayesinde katman onTopic kontrolüne hiç gelmeden çözülür.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "asdf hecele",
+      "kategori": "Sınır/aykırı girdi - anlamsız kelime + geçerli niyet",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "'asdf' geçerli bir kelime olmasa da [a-z]{2,} ve 'hecele' kalıbına uyar; heceBol algoritması sesli harf içermediği için kelimeyi tek parça olarak döndürür (1 hece gibi). Modele gitmez.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Anlamsız kelime girilse de deterministik heceleme onu işler; sesli harf bulunmadığında heceBol vi.length<=1 dalına girip kelimeyi bölmeden tek parça verir. Anlamlılık denetimi yoktur.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "KÜTÜPHANECİLİK KAÇ HECE",
+      "kategori": "Sınır/aykırı girdi - uzun kelime + tamamı büyük + Türkçe karakter",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Tamamı büyük ve Türkçe karakterli olsa da trLower+fold ile normalize edilir; 'kaç hece' kalıbı tetiklenir ve uzun kelime hecelenip sayısı verilir. Sayıyı yazma, davranışı tarif et.",
+      "zorluk": "orta",
+      "neden_tuzak": "Hem büyük harf, hem uzunluk, hem İ/Ü/Ç gibi karakterlerin üst üste binmesi eşleşmeyi bozar sanılır; trLower'ın İ→i dönüşümü ve fold ile sınır yine deterministik katmanda çözülür.",
+      "_ajan": "sinir-girdi"
+    },
+    {
+      "soru": "yağmur kelimesini heceler misin",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "yağmur kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Doğal nazik ifade ('heceler misin') ama 'yağmur' hecele'den hemen önce geldiği için doğru hedef olarak yakalanır; banka dışı kelime.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "ışık hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "ışık kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Banka dışı kelime; 'ışık' baş harfi sesli olduğu için ilk hece tek harf, çocuğun beklediğinden farklı bölünebilir.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "ışık nasıl hecelenir",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İdeal: 'ışık' kelimesini hecelemeli. Gerçekte regex 'hecele'den hemen önceki kelimeyi aldığı için hedef 'ışık' yerine 'nasıl' olur ve yanlış kelime hecelenir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'X nasıl hecelenir' kalıbında araya 'nasıl' girer; regex hedefi 'nasıl' olarak yakalar, gerçek kelime 'ışık' kaçar — yanlış hedef tuzağı.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "şemsiye nasıl hecelenir",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İdeal: 'şemsiye' hecelenmeli. Gerçekte hedef 'nasıl' olarak yakalanır ve yanlış kelime hecelenir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "'nasıl hecelenir' kalıbı hedefi 'nasıl'a kaydırır; banka dışı 'şemsiye' hiç hecelenmez — yanlış hedef tuzağı.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "Kitap nasıl hecelenir",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İdeal: 'kitap' hecelenmeli. Gerçekte hedef 'nasıl' olur (büyük harfle başlasa da küçültülür) ve yanlış kelime hecelenir.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Büyük harf + 'nasıl hecelenir' kalıbı birleşince hedef yine 'nasıl'a kayar — yanlış hedef tuzağı.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "kitabı hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Yakalanan hedef ek almış 'kitabı' olur; 'kitabı' kelimesini doğru hecelemeli (kök 'kitap' değil çekimli hâl hecelenir).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Ek almış kelime: hedef kök 'kitap' yerine 'kitabı' olur; çocuk kökü beklerken çekimli hâl hecelenir.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "yağmuru hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hedef ek almış 'yağmuru' olur; 'yağmuru' kelimesini doğru hecelemeli (kök değil çekimli hâl hecelenir).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Belirtme eki almış kelime hedef olur; kök 'yağmur' değil 'yağmuru' hecelenir.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "ağacı kaç hece",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hedef ek almış 'ağacı' olur; 'ağacı' kelimesinin hece sayısını vermeli (kök 'ağaç' değil çekimli hâl sayılır).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Ek almış kelime + yumuşama (ağaç→ağacı) hedef olur; kök ile farklı hece çıkar.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "uçağı hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hedef ek almış 'uçağı' olur; 'uçağı' kelimesini doğru hecelemeli (kök 'uçak' değil yumuşamış çekimli hâl).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Yumuşama + ek (uçak→uçağı) ile hedef kökten farklılaşır; çocuk kökü beklerken çekimli hâl hecelenir.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "ağustos böceği kaç hece",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "İdeal: 'ağustos' (veya tüm öbek) için cevap. Gerçekte 'kaç hece'den hemen önceki kelime alındığı için hedef 'böceği' olur; 'ağustos' kaçar.",
+      "zorluk": "tuzak",
+      "neden_tuzak": "İki kelimelik öbekte regex yalnız son kelimeyi ('böceği') yakalar; banka dışı 'ağustos' hiç sayılmaz — yanlış hedef tuzağı.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "iğne kelimesini hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "iğne kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı; 'ğ' içeren ve sesli ile başlayan kelime, hece bölme kuralının doğru uygulanmasını sınar.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "kitapçı kaç hece",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "kitapçı kelimesinin hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı türemiş kelime (kitap+çı); kökten farklı, doğru çekimsiz türemiş hâli hecelenmeli.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "gökyüzü hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "gökyüzü kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı birleşik kelime; iki sessiz (k-y) ortası bölünmesi kuralı doğru uygulanmalı.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "ağaç kelimesini heceler misin",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "ağaç kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "Doğal soru kalıbı; 'ağaç' 'kelimesini'den önce olduğu için hedef doğru yakalanır, banka dışı kelime.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "uçak kaç heceli",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "uçak kelimesinin hece sayısını vermeli.",
+      "zorluk": "kolay",
+      "neden_tuzak": "'heceli' içindeki 'hece' yakalanır; banka dışı kelime, sesli ile başladığı için ilk hece tek harf olur.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "oyuncak hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "oyuncak kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı; 'oy' ile başlama ve 'nc' sessiz çifti hece bölme kuralını zorlar.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "sınıf hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "sınıf kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı; 'sınıf' iki sesli (ı-ı) arası tek sessiz (n) sonraki heceye gider kuralını sınar.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "ağustos kelimesini hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "ağustos kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı; 'ğ' ve 'st' sessiz çifti ile uzun kelime, hece bölme doğruluğunu test eder.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "kütüphane kaç hece",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "kütüphane kelimesinin hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı uzun kelime; 'ph' yan yana sessizler ve çok heceli yapı doğruluğu zorlar.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "bilgisayar hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "bilgisayar kelimesini doğru hecelemeli ve hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı uzun kelime (4 hece); 'lg' sessiz çifti bölünmesi ve çok heceli yapı sınar.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "televizyon kaç hece",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "televizyon kelimesinin hece sayısını vermeli.",
+      "zorluk": "orta",
+      "neden_tuzak": "Banka dışı uzun kelime; 'zy' sessiz çifti ve dört heceli yapı hece bölmeyi zorlar.",
+      "_ajan": "heceleme-dogal"
+    },
+    {
+      "soru": "kütüphaneyi hecele",
+      "kategori": "heceleme",
+      "beklenen_katman": "deterministik",
+      "beklenen_cevap": "Hedef ek almış 'kütüphaneyi' olur; 'kütüphaneyi' kelimesini doğru hecelemeli (kök değil çekimli hâl, kaynaştırma harfi 'y' dahil).",
+      "zorluk": "tuzak",
+      "neden_tuzak": "Ek + kaynaştırma harfi (kütüphane→kütüphaneyi) hedef olur; kök 'kütüphane' değil uzamış çekimli hâl hecelenir.",
+      "_ajan": "heceleme-dogal"
+    }
+  ]
+}

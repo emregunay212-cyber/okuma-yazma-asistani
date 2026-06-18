@@ -140,9 +140,12 @@ add("ki bağlacı nasıl yazılır?",
     w="ki", kany=["yaz", "ayrı", "nasıl", "bağlaç"])
 add("mi soru eki nasıl yazılır?",
     "Soru eki **mı/mi/mu/mü** her zaman ayrı yazılır: \"Geldin **mi**?\" 😊",
-    w="mi", kany=["yaz", "ayrı", "soru", "ek"])
+    w="mi", kany=["yaz", "ayrı", "soru eki", "soru ek"])  # "ek" tek başına "köpek"e takılıyordu
 
 # ------------------------------------------------------------------ KURAL / TANIM / NOKTALAMA / BUYUK HARF
+# Noktalama niyet anahtarlari: işaret sorusu olmadan ("nokta atışı", "kesme şeker") tetiklenmesin.
+NI = ["nereye", "ne zaman", "nasıl", "nedir", "ne demek", "konur", "koy",
+      "kullanıl", "ne işe", "sonun", "işaret", "biter"]
 KURALLAR = [
     ("sesli harfler nelerdir",
      "Sesli (ünlü) harfler: a, e, ı, i, o, ö, u, ü. Toplam **8** tane! 😊",
@@ -161,22 +164,22 @@ KURALLAR = [
      "ğ", None, ["başla"]),
     ("nokta nereye konur",
      "**Nokta (.)** cümlenin sonuna konur. Örnek: Bugün hava çok güzel. 😊",
-     None, ["nokta"], None),
+     None, ["nokta"], NI),
     ("virgül nereye konur",
      "**Virgül (,)** sıralanan kelimeleri ayırır. Örnek: Elma, armut ve muz aldım. 😊",
-     None, ["virgül"], None),
+     None, ["virgül"], NI),
     ("soru işareti nereye konur",
      "**Soru işareti (?)** soru cümlesinin sonuna konur. Örnek: Adın ne? 😊",
      None, ["soru işaret"], None),
     ("ünlem işareti ne zaman konur",
      "**Ünlem (!)** sevinç, heyecan veya seslenme bildirir. Örnek: Yaşasın! 😊",
-     None, ["ünlem"], None),
+     None, ["ünlem"], NI),
     ("iki nokta ne zaman konur",
      "**İki nokta (:)** bir açıklama veya örnek sıralanacağında konur. Örnek: Şunları aldım: kalem, defter. 😊",
      None, ["iki nokta"], None),
     ("kesme işareti ne zaman konur",
      "**Kesme işareti (')** özel isimlere gelen ekleri ayırır. Örnek: Ankara'da, Ali'nin. 😊",
-     None, ["kesme"], None),
+     None, ["kesme"], NI),
     ("büyük harf ne zaman kullanılır",
      "Büyük harf iki yerde: 1) **Cümle başında** (Ali okula gitti.) 2) **Özel isimlerde** (Ali, İzmir, Türkiye). 👍",
      None, ["büyük harf"], None),

@@ -10,5 +10,8 @@ logs/
 .vercel/
 node_modules/
 
+# Python
+__pycache__/
+
 # Yerel araç ayarları
 .claude/

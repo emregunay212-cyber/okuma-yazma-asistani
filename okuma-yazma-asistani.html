@@ -556,7 +556,7 @@ function faqLookup(t){
 
 // "WORD kaç harf / ilk-son harf / kaç sesli-sessiz" gibi kelime sorularında hedef kelime
 // NOT: 'şu' BİLEREK yok — foldlanınca 'su' olur ve gerçek "su" kelimesini engellerdi.
-const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','kelimenin','bu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane','alfabe','alfabede','alfabenin','türkçe','türkçede','türkçenin','cümle','cümlede','sözcük','nin','nın','nun','nün']);
+const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','kelimenin','bu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane','alfabe','alfabede','alfabenin','türkçe','türkçede','türkçenin','cümle','cümlede','sözcük','mı','mi','mu','mü','nin','nın','nun','nün']);
 const WSTOPf=new Set([...WSTOP].map(fold)); // foldlanmış hâli (aksan-duyarsız kontrol için)
 
 // Okuma-yazma konu anahtarları — bir mesajda bunlardan hiçbiri geçmiyorsa soru KONU DIŞI sayılır
@@ -574,6 +574,16 @@ function localAnswer(text){
   const t=trLower(text).replace(/['’ʼ]/g,''); // kesme işareti harf değil: "araba'nın"→"arabanın", "Ali'nin"→"alinin" (6 harf)
   const tf=fold(t);
 
+  // Karşılaştırma sorusu mu? Öyleyse tek kelimeye deterministik sayım/heceleme verme — modele bırak
+  // (yoksa "ev ile okul hangisi çok harfli" gibi sorularda yanlış tek kelime yakalanırdı).
+  // "hangi" ve iki soru eki YALNIZCA sayım/uzunluk bağlamıyla (kaç/harf/hece/uzun…) karşılaştırma
+  // sayılır; yoksa imla düzeltmeleri ("herkez mi herkes mi", "proğram mı program mı") engellenirdi.
+  const cnt=/(kac|harf|hece|uzun|kisa|fazla|buyuk|kucuk)/.test(tf);
+  const cmp = (/\bhangi/.test(tf)&&cnt)
+           || ((tf.match(/\bm[iu]\b/g)||[]).length>=2 && cnt)
+           || /\bdaha\s+(cok|fazla|az|uzun|kisa|buyuk|kucuk)/.test(tf)
+           || /kac\s*(harf|hece)\s*(fazla|uzun|kisa|az|cok)/.test(tf);
+
   // Tek harf: "X (harfi) sesli/sessiz mi" veya "X harfi nedir" → harfi sınıflandır.
   // tf (foldlu) ile yakala ("unlu/unsuz" da olur); harfi t'den indeksle al (ç/ı kimliği korunur).
   const lm=tf.match(/(?:^|[\s"'(])([a-z])\s*(?:harfi?\s*)?(?:sesli|unlu|sessiz|unsuz)\s*m[iu]/d)
@@ -586,7 +596,7 @@ function localAnswer(text){
 
   // Kelimeye özgü KESİN hesaplamalar — bankadan ÖNCE (genel banka cevabına takılmasın).
   // tf (foldlu) ile yakala; kelimeyi t'den (orijinal) indeksle al (fold uzunluğu korur → hizalı).
-  const wq=re=>{const m=tf.match(re); if(!m)return null; const [s,e]=m.indices[1]; const w=t.slice(s,e), fw=fold(w); return (WSTOPf.has(fw)||/^(alfabe|turkce|kelime|sozcuk|cumle)/.test(fw))?null:w;};
+  const wq=re=>{if(cmp)return null; const m=tf.match(re); if(!m)return null; const [s,e]=m.indices[1]; const w=t.slice(s,e), fw=fold(w); return (WSTOPf.has(fw)||/^(alfabe|turkce|kelime|sozcuk|cumle)/.test(fw))?null:w;};
   let w;
   if((w=wq(/([a-z]{2,})\s+(?:kelimesin(?:in|de)\s+)?ilk harf/d)))
     return `**${w}** kelimesinin ilk harfi **${trUpper(w[0])}** harfidir. 😊`;
@@ -610,12 +620,12 @@ function localAnswer(text){
   if(wantsSesli) return `Sesli (ünlü) harfler: ${SESLI.join(', ')}. Toplam **8** tane! 😊`;
   if(wantsSessiz) return `Sessiz (ünsüz) harfler: ${SESSIZ.join(', ')}. Toplam **21** tane! 😊`;
 
-  // Hazır soru bankası (kavramsal/kural sorular)
-  const fq=faqLookup(t);
+  // Hazır soru bankası (kavramsal/kural sorular) — karşılaştırma sorusunda atla (yanlış kelime yakalamasın)
+  const fq=cmp?null:faqLookup(t);
   if(fq!==null) return fq;
 
   // Heceleme (foldlu yakala, orijinal kelimeyi t'den al)
-  if(/hece/.test(tf)){
+  if(/hece/.test(tf)&&!cmp){
     const m=tf.match(/([a-z]{2,})\s+(?:kelimesini\s+|kelimesi\s+)?hecele/d)
           ||tf.match(/hecele\s+(?:bana\s+|su\s+)?([a-z]{2,})/d)
           ||tf.match(/([a-z]{2,})\s+(?:kelimesi\s+)?kac\s*hece/d);
@@ -639,14 +649,15 @@ function localAnswer(text){
   if(/buyuk harf/.test(tf))
     return `Büyük harf iki yerde kullanılır:\n1) **Cümle başında**: Ali okula gitti.\n2) **Özel isimlerde**: Ali, Ayşe, İzmir, Türkiye. 👍`;
 
-  // Noktalama
-  if(/nokta/.test(tf)&&!/noktalama/.test(tf))
+  // Noktalama — yalnızca işaret-sorusu niyeti varsa (yoksa "nokta atışı", "kesme şeker" yanlış tetiklerdi)
+  const pi=/(nereye|ne zaman|nasil|nedir|ne demek|konur|koy|kullanil|ne ise|sonun|isaret|biter)/.test(tf);
+  if(/nokta/.test(tf)&&!/noktalama/.test(tf)&&pi)
     return `**Nokta (.)** cümlenin sonuna konur. Örnek: Bugün hava çok güzel. 😊`;
-  if(/virgul/.test(tf))
+  if(/virgul/.test(tf)&&pi)
     return `**Virgül (,)** sıralanan kelimeleri birbirinden ayırır. Örnek: Elma, armut ve muz aldım. 😊`;
-  if(/soru isaret/.test(tf))
+  if(/soru isaret/.test(tf)&&pi)
     return `**Soru işareti (?)** soru cümlesinin sonuna konur. Örnek: Adın ne? 😊`;
-  if(/unlem/.test(tf))
+  if(/unlem/.test(tf)&&pi)
     return `**Ünlem işareti (!)** sevinç, heyecan veya seslenme bildirir. Örnek: Yaşasın! 😊`;
   if(/noktalama/.test(tf))
     return `Noktalama işaretleri:\n• **Nokta (.)** → cümle sonu\n• **Virgül (,)** → sıralama\n• **Soru işareti (?)** → soru sonu\n• **Ünlem (!)** → heyecan/seslenme 😊`;

@@ -7,3 +7,8 @@ gen_faq.py
 sorular.jsonl
 sorular-islendi.jsonl
 logs/
+
+# Test altyapısı ve dokümanlar (canlı siteye gerekmez)
+test/
+PROJE-TANITIMI.md
+SORU-URETME-PROMPTU.md
