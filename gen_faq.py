@@ -92,16 +92,16 @@ for w in kelimeler:
     ns, nz = n_sesli(w), n_sessiz(w)
     # 1) heceleme
     add(f"{w} hecele", f"**{w}** → {' - '.join(parts)} ({nh} hece) 😊", w=w, k=["hecele"])
-    # 2) hece sayisi
-    add(f"{w} kaç hecelidir?", f"**{w}** kelimesi **{nh}** hecelidir: {'-'.join(parts)} 😊", w=w, k=["hece"])
-    # 3) harf sayisi
-    add(f"{w} kaç harflidir?", f"**{w}** kelimesinde **{nharf}** harf vardır. 😊", w=w, k=["harf"])
-    # 4) ilk harf
+    # 2) hece sayisi — yalnizca gercek sayim sorusunda tetiklensin (kac hece / heceli / hece sayisi)
+    add(f"{w} kaç hecelidir?", f"**{w}** kelimesi **{nh}** hecelidir: {'-'.join(parts)} 😊", w=w, kany=["kaç hece", "heceli", "hecesi", "hece sayı"])
+    # 3) harf sayisi — yalnizca gercek sayim sorusunda tetiklensin (kac harf / harfli / harf sayisi)
+    add(f"{w} kaç harflidir?", f"**{w}** kelimesinde **{nharf}** harf vardır. 😊", w=w, kany=["kaç harf", "harfli", "harf sayı"])
+    # 4) ilk harf — "ilk harf" ifadesi gecmeli
     add(f"{w} kelimesinin ilk harfi nedir?",
-        f"**{w}** kelimesinin ilk harfi **{ilk}** harfidir. 😊", w=w, k=["ilk", "harf"])
-    # 5) son harf
+        f"**{w}** kelimesinin ilk harfi **{ilk}** harfidir. 😊", w=w, k=["ilk harf"])
+    # 5) son harf — "son harf" ifadesi gecmeli
     add(f"{w} kelimesinin son harfi nedir?",
-        f"**{w}** kelimesinin son harfi **{son}** harfidir. 😊", w=w, k=["son", "harf"])
+        f"**{w}** kelimesinin son harfi **{son}** harfidir. 😊", w=w, k=["son harf"])
 
 # ------------------------------------------------------------------ IMLA CIFTLERI (dogru: yanlis)
 IMLA = {
@@ -174,6 +174,9 @@ KURALLAR = [
     ("büyük harf ne zaman kullanılır",
      "Büyük harf iki yerde: 1) **Cümle başında** (Ali okula gitti.) 2) **Özel isimlerde** (Ali, İzmir, Türkiye). 👍",
      None, ["büyük harf"], None),
+    ("büyük ve küçük harf nedir",
+     "**Büyük harfler**: A, B, C, Ç… **Küçük harfler**: a, b, c, ç… Cümle **büyük** harfle başlar, özel isimler büyük yazılır (Ali, Ankara). Kelimenin geri kalanı küçük harfle yazılır. 😊",
+     None, ["harf"], ["büyük küçük", "küçük büyük", "büyük ve küçük", "küçük ve büyük", "büyük harf", "küçük harf"]),
     ("gün ve ay adları büyük harfle mi yazılır",
      "Cümle içinde gün ve ay adları **küçük** harfle başlar: \"pazartesi\", \"ocak\". Ama belirli bir tarihle birlikte büyük yazılır: \"29 Mayıs\". 😊",
      None, ["gün", "ay"], None),

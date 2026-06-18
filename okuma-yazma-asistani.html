@@ -544,7 +544,7 @@ function faqLookup(t){
 }
 
 // "WORD kaç harf / ilk-son harf / kaç sesli-sessiz" gibi kelime sorularında hedef kelime
-const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','bu','şu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane']);
+const WSTOP=new Set(['kaç','hece','kelime','kelimede','kelimesinde','kelimesinin','kelimenin','bu','şu','bir','ilk','son','sesli','sessiz','harf','harfi','var','kaçtane','alfabe','alfabede','alfabenin','türkçe','türkçede','türkçenin','cümle','cümlede','sözcük']);
 
 // Okuma-yazma konu anahtarları — bir mesajda bunlardan hiçbiri geçmiyorsa soru KONU DIŞI sayılır
 const TOPIC_WORDS=['harf','ses','ünlü','ünsüz','alfabe','hece','kelime','sözcük','cümle','imla','yazım','yaz','oku','dikte','nokta','virgül','noktalama','ünlem','vurgu','satır','şiir','tekerleme','metin','paragraf','türkçe'];
@@ -558,11 +558,8 @@ function onTopic(text){
 function localAnswer(text){
   const t=trLower(text);
 
-  // 0) Hazır soru bankası — ÖNCE buna bak
-  const fq=faqLookup(t);
-  if(fq!==null) return fq;
-
-  // Kelime + harf/ses bilgisi (bankada olmayan kelimeler için de deterministik)
+  // 0) Kelimeye özgü KESİN hesaplamalar — bankadan ÖNCE (genel banka cevabına takılmasın)
+  //    Örn: "kalem kaç sesli" → genel "sesli harfler" listesi yerine doğru sayım.
   let wm;
   if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesin(?:in|de)\s+)?ilk harf/)) && !WSTOP.has(wm[1]))
     return `**${wm[1]}** kelimesinin ilk harfi **${trUpper(wm[1][0])}** harfidir. 😊`;
@@ -578,6 +575,10 @@ function localAnswer(text){
   }
   if((wm=t.match(/([a-zçğıöşü]{2,})\s+(?:kelimesinde\s+)?kaç\s*harf/)) && !WSTOP.has(wm[1]))
     return `**${wm[1]}** kelimesinde **${wm[1].length}** harf vardır. 😊`;
+
+  // 1) Hazır soru bankası (kavramsal/kural sorular)
+  const fq=faqLookup(t);
+  if(fq!==null) return fq;
 
   // Heceleme
   if(/hece/.test(t)){
